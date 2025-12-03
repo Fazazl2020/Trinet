@@ -329,9 +329,9 @@ class TrinetBSRNN(nn.Module):
 
     Architecture:
     1. Input Adapter: [B, F, T] complex → [B, 2, T, F] real
-    2. Encoder: 5 FAC layers with novel positional encoding
+    2. Encoder: Variable FAC layers with novel positional encoding
     3. Bottleneck: AIA_Transformer with multi-resolution attention
-    4. Decoder: 5 ConvTranspose layers with skip connections
+    4. Decoder: Variable ConvTranspose layers with skip connections
     5. Output Adapter: [B, 2, T, F] real → [B, F, T] complex
 
     Novel Components (preserved from Trinet):
@@ -342,61 +342,111 @@ class TrinetBSRNN(nn.Module):
     - F=257 frequency bins (n_fft=512, hop=128)
     - Input/output format conversion
     - Compatible with BSRNN training loop
+
+    Args:
+        num_channel: Base channel multiplier (controls network capacity)
+        num_layer: Number of encoder/decoder layers (3, 4, 5, or 6)
+        F: Number of frequency bins (default 257 for n_fft=512)
     """
-    def __init__(self, F=257):
+    def __init__(self, num_channel=128, num_layer=6, F=257):
         super().__init__()
+        self.num_channel = num_channel
+        self.num_layer = num_layer
         self.F = F
+
+        # Calculate channel progression based on num_channel
+        # Base ratio: [16, 32, 64, 128, 256] for num_channel=128
+        # Scale proportionally for other values
+        scale = num_channel / 128.0
+
+        # Define channels for each layer (scale from base)
+        # Ensure minimum 8 channels and powers of 2
+        c1 = max(8, int(16 * scale))
+        c2 = max(16, int(32 * scale))
+        c3 = max(32, int(64 * scale))
+        c4 = max(64, int(128 * scale))
+        c5 = max(128, int(256 * scale))
+
+        # Additional layer for num_layer=6
+        c6 = max(256, int(512 * scale)) if num_layer >= 6 else c5
+
+        # Bottleneck channel (highest capacity)
+        bottleneck_ch = c6 if num_layer >= 6 else c5
+
+        self.channels = [2, c1, c2, c3, c4, c5]
+        if num_layer >= 6:
+            self.channels.append(c6)
 
         # ============================================================
         # ENCODER with FAC (Novel Component)
         # ============================================================
-        self.conv1 = FACLayer(2, 16, (2,5), (1,2), (1,1), F)
-        self.conv2 = FACLayer(16, 32, (2,5), (1,2), (1,1), F)
-        self.conv3 = FACLayer(32, 64, (2,5), (1,2), (1,1), F)
-        self.conv4 = FACLayer(64, 128, (2,5), (1,2), (1,1), F)
-        self.conv5 = FACLayer(128, 256, (2,5), (1,2), (1,1), F)
+        # Always create all possible layers, but only use num_layer of them
+        self.conv1 = FACLayer(2, c1, (2,5), (1,2), (1,1), F)
+        self.conv2 = FACLayer(c1, c2, (2,5), (1,2), (1,1), F)
+        self.conv3 = FACLayer(c2, c3, (2,5), (1,2), (1,1), F)
+        self.conv4 = FACLayer(c3, c4, (2,5), (1,2), (1,1), F)
+        self.conv5 = FACLayer(c4, c5, (2,5), (1,2), (1,1), F)
+
+        if num_layer >= 6:
+            self.conv6 = FACLayer(c5, c6, (2,5), (1,2), (1,1), F)
 
         # ============================================================
         # BOTTLENECK: AIA Transformer (Novel Component)
         # ============================================================
-        self.m1 = AIA_Transformer(256, 256)
+        self.m1 = AIA_Transformer(bottleneck_ch, bottleneck_ch)
 
         # ============================================================
         # DECODER
         # ============================================================
-        self.de5 = nn.ConvTranspose2d(512, 128, (2,5), (1,2), (1,1))
-        self.de4 = nn.ConvTranspose2d(256, 64, (2,5), (1,2), (1,1), output_padding=(0,1))
-        self.de3 = nn.ConvTranspose2d(128, 32, (2,5), (1,2), (1,1))
-        self.de2 = nn.ConvTranspose2d(64, 16, (2,5), (1,2), (1,1), output_padding=(0,1))
-        self.de1 = nn.ConvTranspose2d(32, 2, (2,5), (1,2), (1,1))
+        if num_layer >= 6:
+            self.de6 = nn.ConvTranspose2d(c6*2, c5, (2,5), (1,2), (1,1))
+            self.de5 = nn.ConvTranspose2d(c5*2, c4, (2,5), (1,2), (1,1), output_padding=(0,1))
+        else:
+            self.de5 = nn.ConvTranspose2d(c5*2, c4, (2,5), (1,2), (1,1))
+
+        self.de4 = nn.ConvTranspose2d(c4*2, c3, (2,5), (1,2), (1,1), output_padding=(0,1))
+        self.de3 = nn.ConvTranspose2d(c3*2, c2, (2,5), (1,2), (1,1))
+        self.de2 = nn.ConvTranspose2d(c2*2, c1, (2,5), (1,2), (1,1), output_padding=(0,1))
+        self.de1 = nn.ConvTranspose2d(c1*2, 2, (2,5), (1,2), (1,1))
 
         # Encoder norms
-        self.bn1 = nn.InstanceNorm2d(16, affine=True)
-        self.bn2 = nn.InstanceNorm2d(32, affine=True)
-        self.bn3 = nn.InstanceNorm2d(64, affine=True)
-        self.bn4 = nn.InstanceNorm2d(128, affine=True)
-        self.bn5 = nn.InstanceNorm2d(256, affine=True)
+        self.bn1 = nn.InstanceNorm2d(c1, affine=True)
+        self.bn2 = nn.InstanceNorm2d(c2, affine=True)
+        self.bn3 = nn.InstanceNorm2d(c3, affine=True)
+        self.bn4 = nn.InstanceNorm2d(c4, affine=True)
+        self.bn5 = nn.InstanceNorm2d(c5, affine=True)
+        if num_layer >= 6:
+            self.bn6 = nn.InstanceNorm2d(c6, affine=True)
 
         # Decoder norms (no norm on final output)
-        self.bn5_t = nn.InstanceNorm2d(128, affine=True)
-        self.bn4_t = nn.InstanceNorm2d(64, affine=True)
-        self.bn3_t = nn.InstanceNorm2d(32, affine=True)
-        self.bn2_t = nn.InstanceNorm2d(16, affine=True)
+        if num_layer >= 6:
+            self.bn6_t = nn.InstanceNorm2d(c5, affine=True)
+            self.bn5_t = nn.InstanceNorm2d(c4, affine=True)
+        else:
+            self.bn5_t = nn.InstanceNorm2d(c4, affine=True)
+
+        self.bn4_t = nn.InstanceNorm2d(c3, affine=True)
+        self.bn3_t = nn.InstanceNorm2d(c2, affine=True)
+        self.bn2_t = nn.InstanceNorm2d(c1, affine=True)
 
         # PReLU activations
-        self.prelu1 = nn.PReLU(16)
-        self.prelu2 = nn.PReLU(32)
-        self.prelu3 = nn.PReLU(64)
-        self.prelu4 = nn.PReLU(128)
-        self.prelu5 = nn.PReLU(256)
-        self.prelu5_t = nn.PReLU(128)
-        self.prelu4_t = nn.PReLU(64)
-        self.prelu3_t = nn.PReLU(32)
-        self.prelu2_t = nn.PReLU(16)
+        self.prelu1 = nn.PReLU(c1)
+        self.prelu2 = nn.PReLU(c2)
+        self.prelu3 = nn.PReLU(c3)
+        self.prelu4 = nn.PReLU(c4)
+        self.prelu5 = nn.PReLU(c5)
+        if num_layer >= 6:
+            self.prelu6 = nn.PReLU(c6)
+            self.prelu6_t = nn.PReLU(c5)
+
+        self.prelu5_t = nn.PReLU(c4)
+        self.prelu4_t = nn.PReLU(c3)
+        self.prelu3_t = nn.PReLU(c2)
+        self.prelu2_t = nn.PReLU(c1)
 
     def forward(self, x):
         """
-        Forward pass with format conversion
+        Forward pass with adaptive shape matching (supports variable num_layer and any F)
 
         Args:
             x: Complex spectrogram [B, F, T] from torch.stft
@@ -404,6 +454,10 @@ class TrinetBSRNN(nn.Module):
         Returns:
             s: Enhanced complex spectrogram [B, F, T]
         """
+        # Store original shape for reconstruction
+        original_F = x.shape[1]
+        original_T = x.shape[2]
+
         # ============================================================
         # INPUT ADAPTER: [B, F, T] complex → [B, 2, T, F] real
         # ============================================================
@@ -422,29 +476,69 @@ class TrinetBSRNN(nn.Module):
         e4 = self.prelu4(self.bn4(self.conv4(e3)[:,:,:-1]))
         e5 = self.prelu5(self.bn5(self.conv5(e4)[:,:,:-1]))
 
+        # 6th layer (if num_layer >= 6)
+        if self.num_layer >= 6:
+            e6 = self.prelu6(self.bn6(self.conv6(e5)[:,:,:-1]))
+            bottleneck_input = e6
+        else:
+            bottleneck_input = e5
+
         # ============================================================
         # BOTTLENECK: AIA Transformer (Novel Component - Preserved)
         # ============================================================
-        aia_out = self.m1(e5)
-        out = torch.cat([aia_out, e5], dim=1)
+        aia_out = self.m1(bottleneck_input)
+        out = torch.cat([aia_out, bottleneck_input], dim=1)
 
         # ============================================================
-        # DECODER with Skip Connections
+        # DECODER with Adaptive Skip Connections (U-Net style)
         # ============================================================
-        d5 = self.prelu5_t(self.bn5_t(F.pad(self.de5(out), [0,0,1,0])))
+        # Helper function for adaptive shape matching
+        def match_shape(decoder_out, encoder_out):
+            """Match decoder output shape to encoder output shape"""
+            if decoder_out.shape[2:] != encoder_out.shape[2:]:
+                # Use interpolate to match exact dimensions
+                decoder_out = nn.functional.interpolate(
+                    decoder_out,
+                    size=encoder_out.shape[2:],  # Match (T, F) dimensions
+                    mode='bilinear',
+                    align_corners=False
+                )
+            return decoder_out
+
+        if self.num_layer >= 6:
+            d6 = self.prelu6_t(self.bn6_t(F.pad(self.de6(out), [0,0,1,0])))
+            d6 = match_shape(d6, e5)  # ✅ Adaptive matching
+            out = torch.cat([d6, e5], dim=1)
+            d5 = self.prelu5_t(self.bn5_t(F.pad(self.de5(out), [0,0,1,0])))
+        else:
+            d5 = self.prelu5_t(self.bn5_t(F.pad(self.de5(out), [0,0,1,0])))
+
+        d5 = match_shape(d5, e4)  # ✅ Adaptive matching
         out = torch.cat([d5, e4], dim=1)
 
         d4 = self.prelu4_t(self.bn4_t(F.pad(self.de4(out), [0,0,1,0])))
+        d4 = match_shape(d4, e3)  # ✅ Adaptive matching
         out = torch.cat([d4, e3], dim=1)
 
         d3 = self.prelu3_t(self.bn3_t(F.pad(self.de3(out), [0,0,1,0])))
+        d3 = match_shape(d3, e2)  # ✅ Adaptive matching
         out = torch.cat([d3, e2], dim=1)
 
         d2 = self.prelu2_t(self.bn2_t(F.pad(self.de2(out), [0,0,1,0])))
+        d2 = match_shape(d2, e1)  # ✅ Adaptive matching
         out = torch.cat([d2, e1], dim=1)
 
         # Final output (NO normalization, NO activation)
         d1 = F.pad(self.de1(out), [0,0,1,0])  # [B, 2, T, F]
+
+        # Match to input shape exactly (handles any rounding errors)
+        if d1.shape[2:] != (original_T, original_F):
+            d1 = nn.functional.interpolate(
+                d1,
+                size=(original_T, original_F),
+                mode='bilinear',
+                align_corners=False
+            )
 
         # ============================================================
         # OUTPUT ADAPTER: [B, 2, T, F] real → [B, F, T] complex
