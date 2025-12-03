@@ -26,7 +26,7 @@ class Config:
 
     # Server paths - MODIFY THESE FOR YOUR SERVER
     data_dir = '/gdata/fewahab/data/VoicebanK-demand-16K'
-    save_model_dir =  '/ghome/fewahab/Sun-Models/Ab-5/BSRNN/saved_model'
+    save_model_dir =  '/ghome/fewahab/My_5th_pap/Ab4-BSRNN/B1'
 
 args = Config()
 logging.basicConfig(level=logging.INFO)
