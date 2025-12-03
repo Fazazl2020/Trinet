@@ -22,7 +22,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import math
-from utils import LearnableSigmoid
+from utils import LearnableSigmoid, batch_pesq, pesq_loss
 
 
 # ============================================================================
