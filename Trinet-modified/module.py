@@ -446,7 +446,7 @@ class TrinetBSRNN(nn.Module):
 
     def forward(self, x):
         """
-        Forward pass with format conversion (supports variable num_layer)
+        Forward pass with adaptive shape matching (supports variable num_layer and any F)
 
         Args:
             x: Complex spectrogram [B, F, T] from torch.stft
@@ -454,6 +454,10 @@ class TrinetBSRNN(nn.Module):
         Returns:
             s: Enhanced complex spectrogram [B, F, T]
         """
+        # Store original shape for reconstruction
+        original_F = x.shape[1]
+        original_T = x.shape[2]
+
         # ============================================================
         # INPUT ADAPTER: [B, F, T] complex → [B, 2, T, F] real
         # ============================================================
@@ -486,28 +490,55 @@ class TrinetBSRNN(nn.Module):
         out = torch.cat([aia_out, bottleneck_input], dim=1)
 
         # ============================================================
-        # DECODER with Skip Connections
+        # DECODER with Adaptive Skip Connections (U-Net style)
         # ============================================================
+        # Helper function for adaptive shape matching
+        def match_shape(decoder_out, encoder_out):
+            """Match decoder output shape to encoder output shape"""
+            if decoder_out.shape[2:] != encoder_out.shape[2:]:
+                # Use interpolate to match exact dimensions
+                decoder_out = nn.functional.interpolate(
+                    decoder_out,
+                    size=encoder_out.shape[2:],  # Match (T, F) dimensions
+                    mode='bilinear',
+                    align_corners=False
+                )
+            return decoder_out
+
         if self.num_layer >= 6:
             d6 = self.prelu6_t(self.bn6_t(F.pad(self.de6(out), [0,0,1,0])))
+            d6 = match_shape(d6, e5)  # ✅ Adaptive matching
             out = torch.cat([d6, e5], dim=1)
             d5 = self.prelu5_t(self.bn5_t(F.pad(self.de5(out), [0,0,1,0])))
         else:
             d5 = self.prelu5_t(self.bn5_t(F.pad(self.de5(out), [0,0,1,0])))
 
+        d5 = match_shape(d5, e4)  # ✅ Adaptive matching
         out = torch.cat([d5, e4], dim=1)
 
         d4 = self.prelu4_t(self.bn4_t(F.pad(self.de4(out), [0,0,1,0])))
+        d4 = match_shape(d4, e3)  # ✅ Adaptive matching
         out = torch.cat([d4, e3], dim=1)
 
         d3 = self.prelu3_t(self.bn3_t(F.pad(self.de3(out), [0,0,1,0])))
+        d3 = match_shape(d3, e2)  # ✅ Adaptive matching
         out = torch.cat([d3, e2], dim=1)
 
         d2 = self.prelu2_t(self.bn2_t(F.pad(self.de2(out), [0,0,1,0])))
+        d2 = match_shape(d2, e1)  # ✅ Adaptive matching
         out = torch.cat([d2, e1], dim=1)
 
         # Final output (NO normalization, NO activation)
         d1 = F.pad(self.de1(out), [0,0,1,0])  # [B, 2, T, F]
+
+        # Match to input shape exactly (handles any rounding errors)
+        if d1.shape[2:] != (original_T, original_F):
+            d1 = nn.functional.interpolate(
+                d1,
+                size=(original_T, original_F),
+                mode='bilinear',
+                align_corners=False
+            )
 
         # ============================================================
         # OUTPUT ADAPTER: [B, 2, T, F] real → [B, F, T] complex
