@@ -28,11 +28,20 @@ class Config:
     data_dir = '/gdata/fewahab/data/VoicebanK-demand-16K'
     save_model_dir =  '/ghome/fewahab/Sun-Models/Ab-5/BSRNN/saved_model'
 
-    # Resume training - SET THESE TO RESUME FROM CHECKPOINT
-    resume_training = False  # Set to True to resume
-    resume_epoch = 119  # Last completed epoch (0-indexed, so 119 = epoch 120)
-    resume_generator = None  # Path to generator checkpoint (e.g., 'gene_epoch_119_0.xxx')
-    resume_discriminator = None  # Path to discriminator checkpoint (e.g., 'disc_epoch_119')
+    # ========================================
+    # RESUME TRAINING CONFIGURATION
+    # ========================================
+    # To resume training from a checkpoint:
+    # 1. Set resume_training = True
+    # 2. Set resume_epoch to the last completed epoch (e.g., 119 for epoch 120)
+    # 3. Set resume_generator to the checkpoint filename (e.g., 'gene_epoch_119_0.4523')
+    # 4. Set resume_discriminator to the disc checkpoint (e.g., 'disc_epoch_119')
+    # 5. Update epochs to your new target (e.g., 200 for 80 more epochs)
+
+    resume_training = False  # Change to True to enable resume
+    resume_epoch = 0  # Last completed epoch number (0-indexed)
+    resume_generator = ''  # Checkpoint filename (not full path)
+    resume_discriminator = ''  # Discriminator checkpoint filename
 
 args = Config()
 logging.basicConfig(level=logging.INFO)
@@ -64,37 +73,58 @@ class Trainer:
         logging.info('RESUMING FROM CHECKPOINT')
         logging.info('='*70)
 
+        # Validate configuration
+        if not args.resume_generator or args.resume_generator == '':
+            raise ValueError(
+                'ERROR: resume_generator must be specified when resume_training=True\n'
+                'Example: resume_generator = "gene_epoch_119_0.4523"'
+            )
+
+        if not args.resume_discriminator or args.resume_discriminator == '':
+            raise ValueError(
+                'ERROR: resume_discriminator must be specified when resume_training=True\n'
+                'Example: resume_discriminator = "disc_epoch_119"'
+            )
+
         # Load generator (model)
-        if args.resume_generator is not None:
-            gen_path = os.path.join(args.save_model_dir, args.resume_generator)
-            if os.path.exists(gen_path):
-                logging.info(f'Loading generator from: {gen_path}')
-                self.model.load_state_dict(torch.load(gen_path))
-                logging.info('✓ Generator loaded successfully')
-            else:
-                raise FileNotFoundError(f'Generator checkpoint not found: {gen_path}')
-        else:
-            raise ValueError('resume_generator must be specified when resume_training=True')
+        gen_path = os.path.join(args.save_model_dir, args.resume_generator)
+        if not os.path.exists(gen_path):
+            raise FileNotFoundError(
+                f'ERROR: Generator checkpoint not found!\n'
+                f'Looking for: {gen_path}\n'
+                f'Check that the file exists in: {args.save_model_dir}'
+            )
+
+        logging.info(f'Loading generator from: {gen_path}')
+        self.model.load_state_dict(torch.load(gen_path))
+        logging.info('✓ Generator loaded successfully')
 
         # Load discriminator
-        if args.resume_discriminator is not None:
-            disc_path = os.path.join(args.save_model_dir, args.resume_discriminator)
-            if os.path.exists(disc_path):
-                logging.info(f'Loading discriminator from: {disc_path}')
-                self.discriminator.load_state_dict(torch.load(disc_path))
-                logging.info('✓ Discriminator loaded successfully')
-            else:
-                raise FileNotFoundError(f'Discriminator checkpoint not found: {disc_path}')
-        else:
-            raise ValueError('resume_discriminator must be specified when resume_training=True')
+        disc_path = os.path.join(args.save_model_dir, args.resume_discriminator)
+        if not os.path.exists(disc_path):
+            raise FileNotFoundError(
+                f'ERROR: Discriminator checkpoint not found!\n'
+                f'Looking for: {disc_path}\n'
+                f'Check that the file exists in: {args.save_model_dir}'
+            )
+
+        logging.info(f'Loading discriminator from: {disc_path}')
+        self.discriminator.load_state_dict(torch.load(disc_path))
+        logging.info('✓ Discriminator loaded successfully')
 
         # Set start epoch
         self.start_epoch = args.resume_epoch + 1
-        logging.info(f'✓ Will resume from epoch {self.start_epoch} (continuing to epoch {args.epochs})')
 
-        # Calculate scheduler steps to catch up
-        steps_to_skip = self.start_epoch
-        logging.info(f'✓ Scheduler will skip {steps_to_skip} steps to match training progress')
+        # Validation: make sure we're not resuming beyond target epochs
+        if self.start_epoch >= args.epochs:
+            raise ValueError(
+                f'ERROR: Invalid resume configuration!\n'
+                f'resume_epoch ({args.resume_epoch}) >= target epochs ({args.epochs})\n'
+                f'To train more epochs, increase the "epochs" parameter (e.g., epochs = 200)'
+            )
+
+        logging.info(f'✓ Will resume from epoch {self.start_epoch} (continuing to epoch {args.epochs})')
+        logging.info(f'✓ Scheduler will skip {self.start_epoch} steps to match training progress')
 
         logging.info('='*70)
         logging.info(f'RESUME SUMMARY:')

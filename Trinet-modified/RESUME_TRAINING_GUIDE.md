@@ -1,73 +1,58 @@
 # Resume Training Guide
 
-## Overview
-
-You've completed 120 epochs and want to train for 80 more epochs (120→200 total).
-
-The training script now supports checkpoint resuming!
+Complete guide to resume training from a saved checkpoint.
 
 ---
 
-## 📋 Steps to Resume Training
+## Quick Start (120 → 200 epochs)
 
 ### Step 1: Find Your Best Checkpoint
 
-List your saved models:
 ```bash
-ls -lh /ghome/fewahab/Sun-Models/Ab-5/BSRNN/saved_model/
+cd /ghome/fewahab/Sun-Models/Ab-5/BSRNN/saved_model/
+ls -1 gene_epoch_119_*
 ```
 
-You should see files like:
+**Choose the checkpoint with the LOWEST loss number** (smaller is better):
 ```
-gene_epoch_0_0.xxxx
-gene_epoch_1_0.xxxx
-...
-gene_epoch_119_0.xxxx  ← Last epoch (120th epoch, 0-indexed as 119)
-disc_epoch_0
-disc_epoch_1
-...
-disc_epoch_119  ← Last discriminator
+gene_epoch_119_0.4523  ← Use this (lower loss)
+gene_epoch_119_0.4891  ← Not this (higher loss)
 ```
 
-**Find the best model** (lowest validation loss):
-- Look for the smallest number after `gene_epoch_119_`
-- Example: `gene_epoch_119_0.4523` (validation loss = 0.4523)
+Also verify the discriminator checkpoint exists:
+```bash
+ls -1 disc_epoch_119
+```
 
 ---
 
-### Step 2: Modify train.py Configuration
+### Step 2: Edit train.py Configuration
 
-Open `/ghome/fewahab/My_5th_pap/Ab4-BSRNN/B1/train.py` and edit the `Config` class:
+Open `train.py` and modify these lines in the `Config` class:
 
+**BEFORE:**
 ```python
 class Config:
-    # Training hyperparameters
-    epochs = 200  # ← CHANGE FROM 120 TO 200 (for 80 more epochs)
-    batch_size = 6
-    log_interval = 500
-    decay_epoch = 10
-    init_lr = 1e-3
-    cut_len = int(16000 * 2)
-    loss_weights = [0.5, 0.5, 1]
+    epochs = 120
 
-    # Server paths
-    data_dir = '/gdata/fewahab/data/VoicebanK-demand-16K'
-    save_model_dir = '/ghome/fewahab/Sun-Models/Ab-5/BSRNN/saved_model'
-
-    # Resume training - SET THESE TO RESUME
-    resume_training = True  # ← CHANGE TO True
-    resume_epoch = 119  # ← Last completed epoch (0-indexed, so 119 = epoch 120)
-    resume_generator = 'gene_epoch_119_0.xxxx'  # ← YOUR BEST MODEL
-    resume_discriminator = 'disc_epoch_119'  # ← CORRESPONDING DISCRIMINATOR
+    resume_training = False
+    resume_epoch = 0
+    resume_generator = ''
+    resume_discriminator = ''
 ```
 
-**Example** (replace with your actual filenames):
+**AFTER:**
 ```python
-resume_training = True
-resume_epoch = 119
-resume_generator = 'gene_epoch_119_0.4523'  # Replace with actual filename
-resume_discriminator = 'disc_epoch_119'
+class Config:
+    epochs = 200  # ← Change: new target (120 + 80 more = 200)
+
+    resume_training = True  # ← Change: enable resume
+    resume_epoch = 119  # ← Change: last completed epoch (0-indexed)
+    resume_generator = 'gene_epoch_119_0.4523'  # ← Change: YOUR filename
+    resume_discriminator = 'disc_epoch_119'  # ← Change: discriminator
 ```
+
+**Important**: Replace `gene_epoch_119_0.4523` with YOUR actual filename from Step 1!
 
 ---
 
@@ -80,7 +65,7 @@ python train.py
 
 ---
 
-## 📊 Expected Output
+## Expected Output
 
 ```
 ======================================================================
@@ -100,161 +85,173 @@ RESUME SUMMARY:
   Remaining epochs: 80
 ======================================================================
 
-Scheduler adjusted: learning rate = 0.000XXX
+Scheduler adjusted: learning rate = 0.000786
 Epoch 120, Step 1, loss: 0.xxxx, disc_loss: 0.xxxx, PESQ: x.xx
-Epoch 120, Step 500, loss: 0.xxxx, disc_loss: 0.xxxx, PESQ: x.xx
-...
 ```
 
-Training will continue from epoch 120 to 200 (80 more epochs).
+Training will continue from **epoch 120 to 200** (80 more epochs).
 
 ---
 
-## 🔍 What Happens During Resume
+## What Happens During Resume
 
-1. **Models loaded**: Generator and discriminator weights restored
-2. **Epoch counter adjusted**: Starts from 120 (not 0)
-3. **Scheduler adjusted**: Learning rate matches epoch 120 state
-4. **Training continues**: Epochs 120-199 (80 more epochs)
-5. **New checkpoints saved**: `gene_epoch_120_*`, `gene_epoch_121_*`, etc.
-
----
-
-## ⚙️ Technical Details
-
-### Learning Rate Decay
-
-- Your scheduler: `StepLR(step_size=10, gamma=0.98)`
-- Initial LR: 0.001
-- After 120 epochs: LR = 0.001 × 0.98^12 ≈ 0.000786
-- The resume code automatically adjusts scheduler to this state
-
-### Discriminator Usage
-
-- Epochs 0-59: Generator only (no discriminator loss)
-- Epochs 60-119: Generator + Discriminator
-- **Epochs 120-199**: Generator + Discriminator (resumed)
-
-The discriminator will be active since epoch ≥ 60.
+1. ✓ **Model weights restored** from checkpoint
+2. ✓ **Discriminator weights restored** from checkpoint
+3. ✓ **Epoch counter set** to 120 (not 0)
+4. ✓ **Learning rate scheduler adjusted** to match epoch 120 state
+5. ✓ **Training continues** for epochs 120-199
+6. ✓ **New checkpoints saved**: `gene_epoch_120_*`, `gene_epoch_121_*`, etc.
 
 ---
 
-## 📝 Quick Reference Script
+## Configuration Reference
 
-Create a file `resume_train.sh`:
+All settings are in the `Config` class at the top of `train.py`:
 
-```bash
-#!/bin/bash
-# Resume training script
+| Parameter | Description | Example |
+|-----------|-------------|---------|
+| `epochs` | Total epochs to train | `200` (for 80 more) |
+| `resume_training` | Enable/disable resume | `True` or `False` |
+| `resume_epoch` | Last completed epoch (0-indexed) | `119` (= 120th epoch) |
+| `resume_generator` | Generator checkpoint filename | `'gene_epoch_119_0.4523'` |
+| `resume_discriminator` | Discriminator checkpoint filename | `'disc_epoch_119'` |
 
-# Find the best model (lowest validation loss)
-cd /ghome/fewahab/Sun-Models/Ab-5/BSRNN/saved_model/
-echo "Available checkpoints:"
-ls -1 gene_epoch_119_* 2>/dev/null | head -10
-
-echo ""
-echo "Select the best checkpoint (lowest loss) and update train.py:"
-echo "  resume_training = True"
-echo "  resume_epoch = 119"
-echo "  resume_generator = 'gene_epoch_119_0.XXXX'"
-echo "  resume_discriminator = 'disc_epoch_119'"
-echo ""
-echo "Then run:"
-echo "  cd /ghome/fewahab/My_5th_pap/Ab4-BSRNN/B1/"
-echo "  python train.py"
-```
-
-Make it executable:
-```bash
-chmod +x resume_train.sh
-./resume_train.sh
-```
+**Note**: Use filenames only, not full paths. The script automatically adds the path from `save_model_dir`.
 
 ---
 
-## ✅ Checklist
+## Error Messages and Solutions
 
-Before running:
-- [ ] Located best checkpoint: `gene_epoch_119_*`
-- [ ] Updated `epochs = 200` in Config
-- [ ] Set `resume_training = True`
-- [ ] Set `resume_epoch = 119`
-- [ ] Set `resume_generator = 'gene_epoch_119_0.xxxx'`
-- [ ] Set `resume_discriminator = 'disc_epoch_119'`
-- [ ] Verified checkpoint files exist
+### ❌ "resume_generator must be specified"
 
----
+**Cause**: `resume_generator` is empty or not set.
 
-## 🎯 Alternative: Continue Training WITHOUT Modifying epochs
-
-If you want to keep `epochs=120` but train more:
-
-**Option A: Train another 80 epochs separately**
+**Fix**: Set the actual checkpoint filename:
 ```python
-resume_training = True
-resume_epoch = 119
-epochs = 120  # Will train 1 more epoch (120→121)
-```
-
-Then change:
-```python
-epochs = 140  # Train 120→140 (20 more)
-resume_epoch = 119  # Still start from 120
-```
-
-Repeat until you reach 200.
-
-**Option B: Better - just set epochs=200 once** (Recommended)
-```python
-resume_training = True
-resume_epoch = 119
-epochs = 200  # Train 120→200 (80 more) - ONE RUN
+resume_generator = 'gene_epoch_119_0.4523'  # Not empty string ''
 ```
 
 ---
 
-## 🚨 Troubleshooting
+### ❌ "Generator checkpoint not found"
 
-### Error: "Generator checkpoint not found"
-- Check the path: `/ghome/fewahab/Sun-Models/Ab-5/BSRNN/saved_model/`
-- Verify filename exactly matches (case-sensitive)
-- Use `ls` to see actual filenames
+**Cause**: File doesn't exist at the expected path.
 
-### Error: "KeyError" or "RuntimeError: size mismatch"
-- Ensure checkpoint was saved with same architecture
-- Confirm `num_channel=64, num_layer=5` matches
-
-### Training starts from epoch 0
-- Verify `resume_training = True` (not False)
-- Check `resume_epoch = 119` is set
-- Ensure checkpoint paths are not None
+**Fix**:
+1. Check the file exists:
+   ```bash
+   ls /ghome/fewahab/Sun-Models/Ab-5/BSRNN/saved_model/gene_epoch_119_*
+   ```
+2. Verify `save_model_dir` is correct in `Config`
+3. Use exact filename (case-sensitive, including the loss number)
 
 ---
 
-## 📈 Monitoring Resume Training
+### ❌ "Invalid resume configuration! resume_epoch >= target epochs"
 
+**Cause**: You're trying to resume from epoch 119 but `epochs = 120` (already done).
+
+**Fix**: Increase `epochs` to train more:
+```python
+epochs = 200  # Not 120
+```
+
+---
+
+### ❌ Training starts from epoch 0 instead of 120
+
+**Cause**: Resume not enabled.
+
+**Fix**: Verify all settings:
+```python
+resume_training = True  # Must be True, not False
+resume_epoch = 119  # Must be set
+resume_generator = 'gene_epoch_119_0.xxxx'  # Must have filename
+```
+
+---
+
+## Learning Rate Schedule
+
+Your configuration uses:
+```python
+scheduler = StepLR(step_size=10, gamma=0.98)
+init_lr = 1e-3
+```
+
+**Learning rate at different epochs:**
+- Epoch 0: 0.001000
+- Epoch 10: 0.000980
+- Epoch 20: 0.000961
+- Epoch 30: 0.000942
+- ...
+- Epoch 120: 0.000786 ← **Resume point**
+- Epoch 130: 0.000770
+- ...
+- Epoch 200: 0.000634
+
+The resume code automatically adjusts the scheduler to start at the correct learning rate for epoch 120.
+
+---
+
+## Verification Checklist
+
+Before running, verify:
+
+- [ ] You found the best checkpoint: `gene_epoch_119_*` (lowest loss)
+- [ ] You updated `epochs = 200` (or your target)
+- [ ] You set `resume_training = True`
+- [ ] You set `resume_epoch = 119`
+- [ ] You set `resume_generator = 'gene_epoch_119_0.xxxx'` (exact filename)
+- [ ] You set `resume_discriminator = 'disc_epoch_119'`
+- [ ] Both checkpoint files exist in `save_model_dir`
+- [ ] You're in the correct directory to run `python train.py`
+
+---
+
+## Monitoring Training
+
+**Watch training output:**
 ```bash
-# Watch training progress
-tail -f /ghome/fewahab/My_5th_pap/Ab4-BSRNN/B1/logs/training.log
+# If logging to file
+tail -f training.log
 
-# Check new checkpoints
-watch -n 10 "ls -lht /ghome/fewahab/Sun-Models/Ab-5/BSRNN/saved_model/ | head -20"
+# Or watch console output directly
+```
+
+**Check new checkpoints:**
+```bash
+watch -n 30 "ls -lht /ghome/fewahab/Sun-Models/Ab-5/BSRNN/saved_model/ | head -20"
+```
+
+**Monitor GPU:**
+```bash
+watch -n 5 nvidia-smi
 ```
 
 ---
 
-## ✅ Summary
+## Summary
 
-**To resume training for 80 more epochs (120→200):**
+**To resume training for 80 more epochs (120 → 200):**
 
-1. Find best checkpoint: `gene_epoch_119_0.xxxx`
-2. Edit train.py:
+1. Find best checkpoint: `ls gene_epoch_119_*` and pick lowest loss
+2. Edit `train.py` Config:
    - `epochs = 200`
    - `resume_training = True`
    - `resume_epoch = 119`
-   - `resume_generator = 'gene_epoch_119_0.xxxx'`
+   - `resume_generator = 'gene_epoch_119_0.xxxx'` (your actual file)
    - `resume_discriminator = 'disc_epoch_119'`
 3. Run: `python train.py`
-4. Training continues from epoch 120 to 200
+4. Training continues from epoch 120 to 200 ✓
 
-**Done!** Your model will train for 80 more epochs with all states properly restored. 🚀
+---
+
+**Need Help?**
+
+If you encounter errors, the script now provides detailed error messages explaining:
+- What went wrong
+- What file it was looking for
+- How to fix the issue
+
+Simply read the error message and follow the instructions!
