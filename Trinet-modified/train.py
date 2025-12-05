@@ -28,6 +28,12 @@ class Config:
     data_dir = '/gdata/fewahab/data/VoicebanK-demand-16K'
     save_model_dir =  '/ghome/fewahab/Sun-Models/Ab-5/BSRNN/saved_model'
 
+    # Resume training - SET THESE TO RESUME FROM CHECKPOINT
+    resume_training = False  # Set to True to resume
+    resume_epoch = 119  # Last completed epoch (0-indexed, so 119 = epoch 120)
+    resume_generator = None  # Path to generator checkpoint (e.g., 'gene_epoch_119_0.xxx')
+    resume_discriminator = None  # Path to discriminator checkpoint (e.g., 'disc_epoch_119')
+
 args = Config()
 logging.basicConfig(level=logging.INFO)
 
@@ -38,7 +44,7 @@ class Trainer:
         self.hop = 128
         self.train_ds = train_ds
         self.test_ds = test_ds
-        
+
         self.model = BSRNN(num_channel=64, num_layer=5).cuda()
 #         summary(self.model, [(1, 257, args.cut_len//self.hop+1, 2)])
         self.discriminator = Discriminator(ndf=16).cuda()
@@ -46,7 +52,58 @@ class Trainer:
 # #                                      (1, 1, int(self.n_fft/2)+1, args.cut_len//self.hop+1)])
         self.optimizer = torch.optim.Adam(self.model.parameters(), lr=args.init_lr)
         self.optimizer_disc = torch.optim.Adam(self.discriminator.parameters(), lr=args.init_lr)
-        
+
+        # Resume from checkpoint if specified
+        self.start_epoch = 0
+        if args.resume_training:
+            self._load_checkpoint()
+
+    def _load_checkpoint(self):
+        """Load checkpoint to resume training"""
+        logging.info('='*70)
+        logging.info('RESUMING FROM CHECKPOINT')
+        logging.info('='*70)
+
+        # Load generator (model)
+        if args.resume_generator is not None:
+            gen_path = os.path.join(args.save_model_dir, args.resume_generator)
+            if os.path.exists(gen_path):
+                logging.info(f'Loading generator from: {gen_path}')
+                self.model.load_state_dict(torch.load(gen_path))
+                logging.info('✓ Generator loaded successfully')
+            else:
+                raise FileNotFoundError(f'Generator checkpoint not found: {gen_path}')
+        else:
+            raise ValueError('resume_generator must be specified when resume_training=True')
+
+        # Load discriminator
+        if args.resume_discriminator is not None:
+            disc_path = os.path.join(args.save_model_dir, args.resume_discriminator)
+            if os.path.exists(disc_path):
+                logging.info(f'Loading discriminator from: {disc_path}')
+                self.discriminator.load_state_dict(torch.load(disc_path))
+                logging.info('✓ Discriminator loaded successfully')
+            else:
+                raise FileNotFoundError(f'Discriminator checkpoint not found: {disc_path}')
+        else:
+            raise ValueError('resume_discriminator must be specified when resume_training=True')
+
+        # Set start epoch
+        self.start_epoch = args.resume_epoch + 1
+        logging.info(f'✓ Will resume from epoch {self.start_epoch} (continuing to epoch {args.epochs})')
+
+        # Calculate scheduler steps to catch up
+        steps_to_skip = self.start_epoch
+        logging.info(f'✓ Scheduler will skip {steps_to_skip} steps to match training progress')
+
+        logging.info('='*70)
+        logging.info(f'RESUME SUMMARY:')
+        logging.info(f'  Completed epochs: 0-{args.resume_epoch} ({args.resume_epoch + 1} epochs)')
+        logging.info(f'  Resuming from: epoch {self.start_epoch}')
+        logging.info(f'  Target epochs: {args.epochs}')
+        logging.info(f'  Remaining epochs: {args.epochs - self.start_epoch}')
+        logging.info('='*70 + '\n')
+
     def train_step(self, batch, use_disc):
         clean = batch[0].cuda()
         noisy = batch[1].cuda()
@@ -190,7 +247,15 @@ class Trainer:
     def train(self):
         scheduler_G = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=args.decay_epoch, gamma=0.98)
         scheduler_D = torch.optim.lr_scheduler.StepLR(self.optimizer_disc, step_size=args.decay_epoch, gamma=0.98)
-        for epoch in range(args.epochs):
+
+        # If resuming, advance scheduler to match training progress
+        if self.start_epoch > 0:
+            for _ in range(self.start_epoch):
+                scheduler_G.step()
+                scheduler_D.step()
+            logging.info(f'Scheduler adjusted: learning rate = {scheduler_G.get_last_lr()[0]:.6f}')
+
+        for epoch in range(self.start_epoch, args.epochs):
             self.model.train()
             self.discriminator.train()
 
