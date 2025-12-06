@@ -286,7 +286,10 @@ class Trainer:
         disc_loss_total = 0.
         pesq_total = 0.
         pesq_count = 0
-        for idx, batch in enumerate(tqdm(self.test_ds)):
+        for idx, batch in enumerate(tqdm(self.test_ds,
+                                              ncols=100,
+                                              mininterval=10.0,
+                                              desc='Validation')):
             step = idx + 1
             loss, disc_loss, pesq_raw = self.test_step(batch,use_disc)
             gen_loss_total += loss
@@ -379,7 +382,10 @@ class Trainer:
                 use_disc = False
 
             # Training
-            for idx, batch in enumerate(tqdm(self.train_ds)):
+            for idx, batch in enumerate(tqdm(self.train_ds,
+                                              ncols=100,
+                                              mininterval=10.0,
+                                              desc=f'Epoch {epoch}')):
                 step = idx + 1
                 loss, disc_loss, pesq_raw = self.train_step(batch, use_disc)
 
