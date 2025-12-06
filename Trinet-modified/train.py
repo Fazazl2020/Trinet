@@ -286,9 +286,10 @@ class Trainer:
         disc_loss_total = 0.
         pesq_total = 0.
         pesq_count = 0
+        # miniters=20 means update every 20 batches (~12 updates for validation)
         for idx, batch in enumerate(tqdm(self.test_ds,
                                               ncols=100,
-                                              mininterval=10.0,
+                                              miniters=20,
                                               desc='Validation')):
             step = idx + 1
             loss, disc_loss, pesq_raw = self.test_step(batch,use_disc)
@@ -382,9 +383,10 @@ class Trainer:
                 use_disc = False
 
             # Training
+            # miniters=150 means update every 150 batches (~12 updates per epoch with 1928 batches)
             for idx, batch in enumerate(tqdm(self.train_ds,
                                               ncols=100,
-                                              mininterval=10.0,
+                                              miniters=150,
                                               desc=f'Epoch {epoch}')):
                 step = idx + 1
                 loss, disc_loss, pesq_raw = self.train_step(batch, use_disc)
