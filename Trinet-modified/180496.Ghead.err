@@ -1,0 +1,690 @@
+INFO:root:Epoch 0, Step 500, loss: 0.1644, disc_loss: 0.0276, PESQ: 1.5099
+INFO:root:TEST - Generator loss: 0.0975, Discriminator loss: 0.0115, PESQ: 2.2729
+INFO:root:? Saved checkpoint_last.pt (epoch 0, val_loss: 0.097453)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.097453)
+INFO:root:Epoch 1, Step 500, loss: 0.1105, disc_loss: 0.0077, PESQ: 1.8191
+INFO:root:TEST - Generator loss: 0.0720, Discriminator loss: 0.0083, PESQ: 2.2705
+INFO:root:? Saved checkpoint_last.pt (epoch 1, val_loss: 0.072043)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.072043)
+INFO:root:Epoch 2, Step 500, loss: 0.0946, disc_loss: 0.0052, PESQ: 1.8442
+INFO:root:TEST - Generator loss: 0.0679, Discriminator loss: 0.0077, PESQ: 2.1970
+INFO:root:? Saved checkpoint_last.pt (epoch 2, val_loss: 0.067886)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.067886)
+INFO:root:Epoch 3, Step 500, loss: 0.0879, disc_loss: 0.0048, PESQ: 1.8357
+INFO:root:TEST - Generator loss: 0.0625, Discriminator loss: 0.0089, PESQ: 2.2656
+INFO:root:? Saved checkpoint_last.pt (epoch 3, val_loss: 0.062507)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.062507)
+INFO:root:Epoch 4, Step 500, loss: 0.0839, disc_loss: 0.0042, PESQ: 1.8425
+INFO:root:TEST - Generator loss: 0.0578, Discriminator loss: 0.0045, PESQ: 2.3087
+INFO:root:? Saved checkpoint_last.pt (epoch 4, val_loss: 0.057834)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.057834)
+INFO:root:Epoch 5, Step 500, loss: 0.0790, disc_loss: 0.0040, PESQ: 1.8713
+INFO:root:TEST - Generator loss: 0.0556, Discriminator loss: 0.0069, PESQ: 2.3201
+INFO:root:? Saved checkpoint_last.pt (epoch 5, val_loss: 0.055580)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.055580)
+INFO:root:Epoch 6, Step 500, loss: 0.0770, disc_loss: 0.0037, PESQ: 1.8890
+INFO:root:TEST - Generator loss: 0.0545, Discriminator loss: 0.0095, PESQ: 2.3920
+INFO:root:? Saved checkpoint_last.pt (epoch 6, val_loss: 0.054494)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.054494)
+INFO:root:Epoch 7, Step 500, loss: 0.0751, disc_loss: 0.0037, PESQ: 1.9076
+INFO:root:TEST - Generator loss: 0.0521, Discriminator loss: 0.0043, PESQ: 2.4044
+INFO:root:? Saved checkpoint_last.pt (epoch 7, val_loss: 0.052075)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.052075)
+INFO:root:Epoch 8, Step 500, loss: 0.0741, disc_loss: 0.0035, PESQ: 1.9174
+INFO:root:TEST - Generator loss: 0.0515, Discriminator loss: 0.0040, PESQ: 2.4131
+INFO:root:? Saved checkpoint_last.pt (epoch 8, val_loss: 0.051505)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.051505)
+INFO:root:Epoch 9, Step 500, loss: 0.0728, disc_loss: 0.0033, PESQ: 1.9344
+INFO:root:TEST - Generator loss: 0.0541, Discriminator loss: 0.0060, PESQ: 2.3976
+INFO:root:? Saved checkpoint_last.pt (epoch 9, val_loss: 0.054084)
+INFO:root:Epoch 10, Step 500, loss: 0.0721, disc_loss: 0.0034, PESQ: 1.9457
+INFO:root:TEST - Generator loss: 0.0509, Discriminator loss: 0.0032, PESQ: 2.4571
+INFO:root:? Saved checkpoint_last.pt (epoch 10, val_loss: 0.050903)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.050903)
+INFO:root:Epoch 11, Step 500, loss: 0.0718, disc_loss: 0.0031, PESQ: 1.9609
+INFO:root:TEST - Generator loss: 0.0503, Discriminator loss: 0.0040, PESQ: 2.4649
+INFO:root:? Saved checkpoint_last.pt (epoch 11, val_loss: 0.050285)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.050285)
+INFO:root:Epoch 12, Step 500, loss: 0.0707, disc_loss: 0.0034, PESQ: 1.9798
+INFO:root:TEST - Generator loss: 0.0498, Discriminator loss: 0.0036, PESQ: 2.4636
+INFO:root:? Saved checkpoint_last.pt (epoch 12, val_loss: 0.049789)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.049789)
+INFO:root:Epoch 13, Step 500, loss: 0.0704, disc_loss: 0.0033, PESQ: 1.9904
+INFO:root:TEST - Generator loss: 0.0501, Discriminator loss: 0.0041, PESQ: 2.4409
+INFO:root:? Saved checkpoint_last.pt (epoch 13, val_loss: 0.050052)
+INFO:root:Epoch 14, Step 500, loss: 0.0699, disc_loss: 0.0032, PESQ: 1.9974
+INFO:root:TEST - Generator loss: 0.0496, Discriminator loss: 0.0038, PESQ: 2.4366
+INFO:root:? Saved checkpoint_last.pt (epoch 14, val_loss: 0.049636)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.049636)
+INFO:root:Epoch 15, Step 500, loss: 0.0691, disc_loss: 0.0031, PESQ: 2.0192
+INFO:root:TEST - Generator loss: 0.0483, Discriminator loss: 0.0039, PESQ: 2.4843
+INFO:root:? Saved checkpoint_last.pt (epoch 15, val_loss: 0.048347)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.048347)
+INFO:root:Epoch 16, Step 500, loss: 0.0688, disc_loss: 0.0029, PESQ: 2.0318
+INFO:root:TEST - Generator loss: 0.0485, Discriminator loss: 0.0041, PESQ: 2.5176
+INFO:root:? Saved checkpoint_last.pt (epoch 16, val_loss: 0.048480)
+INFO:root:Epoch 17, Step 500, loss: 0.0680, disc_loss: 0.0031, PESQ: 2.0539
+INFO:root:TEST - Generator loss: 0.0487, Discriminator loss: 0.0040, PESQ: 2.4423
+INFO:root:? Saved checkpoint_last.pt (epoch 17, val_loss: 0.048660)
+INFO:root:Epoch 18, Step 500, loss: 0.0679, disc_loss: 0.0029, PESQ: 2.0705
+INFO:root:TEST - Generator loss: 0.0481, Discriminator loss: 0.0033, PESQ: 2.5074
+INFO:root:? Saved checkpoint_last.pt (epoch 18, val_loss: 0.048128)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.048128)
+INFO:root:Epoch 19, Step 500, loss: 0.0676, disc_loss: 0.0029, PESQ: 2.0827
+INFO:root:TEST - Generator loss: 0.0476, Discriminator loss: 0.0047, PESQ: 2.5506
+INFO:root:? Saved checkpoint_last.pt (epoch 19, val_loss: 0.047586)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.047586)
+INFO:root:Epoch 20, Step 500, loss: 0.0673, disc_loss: 0.0029, PESQ: 2.0988
+INFO:root:TEST - Generator loss: 0.0478, Discriminator loss: 0.0030, PESQ: 2.5318
+INFO:root:? Saved checkpoint_last.pt (epoch 20, val_loss: 0.047839)
+INFO:root:Epoch 21, Step 500, loss: 0.0672, disc_loss: 0.0030, PESQ: 2.1028
+INFO:root:TEST - Generator loss: 0.0473, Discriminator loss: 0.0051, PESQ: 2.5429
+INFO:root:? Saved checkpoint_last.pt (epoch 21, val_loss: 0.047261)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.047261)
+INFO:root:Epoch 22, Step 500, loss: 0.0667, disc_loss: 0.0029, PESQ: 2.1396
+INFO:root:TEST - Generator loss: 0.0476, Discriminator loss: 0.0044, PESQ: 2.5312
+INFO:root:? Saved checkpoint_last.pt (epoch 22, val_loss: 0.047630)
+INFO:root:Epoch 23, Step 500, loss: 0.0668, disc_loss: 0.0028, PESQ: 2.1447
+INFO:root:TEST - Generator loss: 0.0485, Discriminator loss: 0.0047, PESQ: 2.5400
+INFO:root:? Saved checkpoint_last.pt (epoch 23, val_loss: 0.048474)
+INFO:root:Epoch 24, Step 500, loss: 0.0662, disc_loss: 0.0029, PESQ: 2.1581
+INFO:root:TEST - Generator loss: 0.0475, Discriminator loss: 0.0051, PESQ: 2.6088
+INFO:root:? Saved checkpoint_last.pt (epoch 24, val_loss: 0.047531)
+INFO:root:Epoch 25, Step 500, loss: 0.0656, disc_loss: 0.0029, PESQ: 2.1799
+INFO:root:TEST - Generator loss: 0.0481, Discriminator loss: 0.0043, PESQ: 2.5967
+INFO:root:? Saved checkpoint_last.pt (epoch 25, val_loss: 0.048108)
+INFO:root:Epoch 26, Step 500, loss: 0.0659, disc_loss: 0.0029, PESQ: 2.1820
+INFO:root:TEST - Generator loss: 0.0474, Discriminator loss: 0.0049, PESQ: 2.5757
+INFO:root:? Saved checkpoint_last.pt (epoch 26, val_loss: 0.047412)
+INFO:root:Epoch 27, Step 500, loss: 0.0657, disc_loss: 0.0029, PESQ: 2.2000
+INFO:root:TEST - Generator loss: 0.0469, Discriminator loss: 0.0059, PESQ: 2.5771
+INFO:root:? Saved checkpoint_last.pt (epoch 27, val_loss: 0.046892)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.046892)
+INFO:root:Epoch 28, Step 500, loss: 0.0655, disc_loss: 0.0031, PESQ: 2.2132
+INFO:root:TEST - Generator loss: 0.0468, Discriminator loss: 0.0046, PESQ: 2.5699
+INFO:root:? Saved checkpoint_last.pt (epoch 28, val_loss: 0.046829)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.046829)
+INFO:root:Epoch 29, Step 500, loss: 0.0651, disc_loss: 0.0029, PESQ: 2.2269
+INFO:root:TEST - Generator loss: 0.0461, Discriminator loss: 0.0045, PESQ: 2.6708
+INFO:root:? Saved checkpoint_last.pt (epoch 29, val_loss: 0.046056)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.046056)
+INFO:root:Epoch 30, Step 500, loss: 0.0642, disc_loss: 0.0029, PESQ: 2.2409
+INFO:root:TEST - Generator loss: 0.0462, Discriminator loss: 0.0050, PESQ: 2.6178
+INFO:root:? Saved checkpoint_last.pt (epoch 30, val_loss: 0.046234)
+INFO:root:Epoch 31, Step 500, loss: 0.0642, disc_loss: 0.0030, PESQ: 2.2532
+INFO:root:TEST - Generator loss: 0.0462, Discriminator loss: 0.0058, PESQ: 2.6128
+INFO:root:? Saved checkpoint_last.pt (epoch 31, val_loss: 0.046232)
+INFO:root:Epoch 32, Step 500, loss: 0.0644, disc_loss: 0.0028, PESQ: 2.2488
+INFO:root:TEST - Generator loss: 0.0467, Discriminator loss: 0.0048, PESQ: 2.6604
+INFO:root:? Saved checkpoint_last.pt (epoch 32, val_loss: 0.046727)
+INFO:root:Epoch 33, Step 500, loss: 0.0639, disc_loss: 0.0029, PESQ: 2.2653
+INFO:root:TEST - Generator loss: 0.0455, Discriminator loss: 0.0048, PESQ: 2.6564
+INFO:root:? Saved checkpoint_last.pt (epoch 33, val_loss: 0.045460)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.045460)
+INFO:root:Epoch 34, Step 500, loss: 0.0637, disc_loss: 0.0029, PESQ: 2.2698
+INFO:root:TEST - Generator loss: 0.0464, Discriminator loss: 0.0051, PESQ: 2.6569
+INFO:root:? Saved checkpoint_last.pt (epoch 34, val_loss: 0.046386)
+INFO:root:Epoch 35, Step 500, loss: 0.0635, disc_loss: 0.0028, PESQ: 2.2713
+INFO:root:TEST - Generator loss: 0.0456, Discriminator loss: 0.0051, PESQ: 2.6353
+INFO:root:? Saved checkpoint_last.pt (epoch 35, val_loss: 0.045632)
+INFO:root:Epoch 36, Step 500, loss: 0.0636, disc_loss: 0.0028, PESQ: 2.2746
+INFO:root:TEST - Generator loss: 0.0454, Discriminator loss: 0.0057, PESQ: 2.6771
+INFO:root:? Saved checkpoint_last.pt (epoch 36, val_loss: 0.045444)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.045444)
+INFO:root:Epoch 37, Step 500, loss: 0.0634, disc_loss: 0.0027, PESQ: 2.2847
+INFO:root:TEST - Generator loss: 0.0460, Discriminator loss: 0.0046, PESQ: 2.6976
+INFO:root:? Saved checkpoint_last.pt (epoch 37, val_loss: 0.046042)
+INFO:root:Epoch 38, Step 500, loss: 0.0629, disc_loss: 0.0027, PESQ: 2.2891
+INFO:root:TEST - Generator loss: 0.0453, Discriminator loss: 0.0053, PESQ: 2.6585
+INFO:root:? Saved checkpoint_last.pt (epoch 38, val_loss: 0.045260)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.045260)
+INFO:root:Epoch 39, Step 500, loss: 0.0628, disc_loss: 0.0028, PESQ: 2.2996
+INFO:root:TEST - Generator loss: 0.0453, Discriminator loss: 0.0044, PESQ: 2.6380
+INFO:root:? Saved checkpoint_last.pt (epoch 39, val_loss: 0.045271)
+INFO:root:Epoch 40, Step 500, loss: 0.0629, disc_loss: 0.0026, PESQ: 2.2950
+INFO:root:TEST - Generator loss: 0.0449, Discriminator loss: 0.0062, PESQ: 2.6515
+INFO:root:? Saved checkpoint_last.pt (epoch 40, val_loss: 0.044877)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.044877)
+INFO:root:Epoch 41, Step 500, loss: 0.0627, disc_loss: 0.0027, PESQ: 2.3089
+INFO:root:TEST - Generator loss: 0.0456, Discriminator loss: 0.0042, PESQ: 2.6831
+INFO:root:? Saved checkpoint_last.pt (epoch 41, val_loss: 0.045650)
+INFO:root:Epoch 42, Step 500, loss: 0.0628, disc_loss: 0.0027, PESQ: 2.2990
+INFO:root:TEST - Generator loss: 0.0457, Discriminator loss: 0.0059, PESQ: 2.6497
+INFO:root:? Saved checkpoint_last.pt (epoch 42, val_loss: 0.045708)
+INFO:root:Epoch 43, Step 500, loss: 0.0625, disc_loss: 0.0027, PESQ: 2.3055
+INFO:root:TEST - Generator loss: 0.0448, Discriminator loss: 0.0048, PESQ: 2.7400
+INFO:root:? Saved checkpoint_last.pt (epoch 43, val_loss: 0.044839)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.044839)
+INFO:root:Epoch 44, Step 500, loss: 0.0624, disc_loss: 0.0026, PESQ: 2.3133
+INFO:root:TEST - Generator loss: 0.0448, Discriminator loss: 0.0045, PESQ: 2.6892
+INFO:root:? Saved checkpoint_last.pt (epoch 44, val_loss: 0.044792)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.044792)
+INFO:root:Epoch 45, Step 500, loss: 0.0625, disc_loss: 0.0026, PESQ: 2.3150
+INFO:root:TEST - Generator loss: 0.0444, Discriminator loss: 0.0051, PESQ: 2.6808
+INFO:root:? Saved checkpoint_last.pt (epoch 45, val_loss: 0.044413)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.044413)
+INFO:root:Epoch 46, Step 500, loss: 0.0624, disc_loss: 0.0027, PESQ: 2.3178
+INFO:root:TEST - Generator loss: 0.0461, Discriminator loss: 0.0049, PESQ: 2.6717
+INFO:root:? Saved checkpoint_last.pt (epoch 46, val_loss: 0.046108)
+INFO:root:Epoch 47, Step 500, loss: 0.0623, disc_loss: 0.0026, PESQ: 2.3245
+INFO:root:TEST - Generator loss: 0.0446, Discriminator loss: 0.0050, PESQ: 2.7443
+INFO:root:? Saved checkpoint_last.pt (epoch 47, val_loss: 0.044619)
+INFO:root:Epoch 48, Step 500, loss: 0.0619, disc_loss: 0.0026, PESQ: 2.3360
+INFO:root:TEST - Generator loss: 0.0451, Discriminator loss: 0.0047, PESQ: 2.7110
+INFO:root:? Saved checkpoint_last.pt (epoch 48, val_loss: 0.045112)
+INFO:root:Epoch 49, Step 500, loss: 0.0615, disc_loss: 0.0027, PESQ: 2.3471
+INFO:root:TEST - Generator loss: 0.0443, Discriminator loss: 0.0057, PESQ: 2.6903
+INFO:root:? Saved checkpoint_last.pt (epoch 49, val_loss: 0.044343)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.044343)
+INFO:root:Epoch 50, Step 500, loss: 0.0618, disc_loss: 0.0026, PESQ: 2.3491
+INFO:root:TEST - Generator loss: 0.0464, Discriminator loss: 0.0049, PESQ: 2.6777
+INFO:root:? Saved checkpoint_last.pt (epoch 50, val_loss: 0.046390)
+INFO:root:Epoch 51, Step 500, loss: 0.0614, disc_loss: 0.0026, PESQ: 2.3605
+INFO:root:TEST - Generator loss: 0.0444, Discriminator loss: 0.0057, PESQ: 2.6985
+INFO:root:? Saved checkpoint_last.pt (epoch 51, val_loss: 0.044356)
+INFO:root:Epoch 52, Step 500, loss: 0.0614, disc_loss: 0.0025, PESQ: 2.3529
+INFO:root:TEST - Generator loss: 0.0450, Discriminator loss: 0.0046, PESQ: 2.6847
+INFO:root:? Saved checkpoint_last.pt (epoch 52, val_loss: 0.045036)
+INFO:root:Epoch 53, Step 500, loss: 0.0618, disc_loss: 0.0026, PESQ: 2.3474
+INFO:root:TEST - Generator loss: 0.0443, Discriminator loss: 0.0044, PESQ: 2.7309
+INFO:root:? Saved checkpoint_last.pt (epoch 53, val_loss: 0.044257)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.044257)
+INFO:root:Epoch 54, Step 500, loss: 0.0613, disc_loss: 0.0027, PESQ: 2.3544
+INFO:root:TEST - Generator loss: 0.0439, Discriminator loss: 0.0058, PESQ: 2.7109
+INFO:root:? Saved checkpoint_last.pt (epoch 54, val_loss: 0.043876)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.043876)
+INFO:root:Epoch 55, Step 500, loss: 0.0613, disc_loss: 0.0026, PESQ: 2.3634
+INFO:root:TEST - Generator loss: 0.0443, Discriminator loss: 0.0050, PESQ: 2.7143
+INFO:root:? Saved checkpoint_last.pt (epoch 55, val_loss: 0.044266)
+INFO:root:Epoch 56, Step 500, loss: 0.0615, disc_loss: 0.0025, PESQ: 2.3602
+INFO:root:TEST - Generator loss: 0.0447, Discriminator loss: 0.0046, PESQ: 2.6898
+INFO:root:? Saved checkpoint_last.pt (epoch 56, val_loss: 0.044698)
+INFO:root:Epoch 57, Step 500, loss: 0.0612, disc_loss: 0.0026, PESQ: 2.3637
+INFO:root:TEST - Generator loss: 0.0444, Discriminator loss: 0.0051, PESQ: 2.7199
+INFO:root:? Saved checkpoint_last.pt (epoch 57, val_loss: 0.044365)
+INFO:root:Epoch 58, Step 500, loss: 0.0611, disc_loss: 0.0025, PESQ: 2.3737
+INFO:root:TEST - Generator loss: 0.0447, Discriminator loss: 0.0053, PESQ: 2.6883
+INFO:root:? Saved checkpoint_last.pt (epoch 58, val_loss: 0.044725)
+INFO:root:Epoch 59, Step 500, loss: 0.0609, disc_loss: 0.0025, PESQ: 2.3727
+INFO:root:TEST - Generator loss: 0.0446, Discriminator loss: 0.0058, PESQ: 2.7095
+INFO:root:? Saved checkpoint_last.pt (epoch 59, val_loss: 0.044574)
+INFO:root:Epoch 60, Step 500, loss: 0.0607, disc_loss: 0.0025, PESQ: 2.3838
+INFO:root:TEST - Generator loss: 0.0444, Discriminator loss: 0.0044, PESQ: 2.7142
+INFO:root:? Saved checkpoint_last.pt (epoch 60, val_loss: 0.044396)
+INFO:root:Epoch 61, Step 500, loss: 0.0606, disc_loss: 0.0025, PESQ: 2.3913
+INFO:root:TEST - Generator loss: 0.0440, Discriminator loss: 0.0056, PESQ: 2.6976
+INFO:root:? Saved checkpoint_last.pt (epoch 61, val_loss: 0.043956)
+INFO:root:Epoch 62, Step 500, loss: 0.0610, disc_loss: 0.0025, PESQ: 2.3850
+INFO:root:TEST - Generator loss: 0.0436, Discriminator loss: 0.0042, PESQ: 2.7249
+INFO:root:? Saved checkpoint_last.pt (epoch 62, val_loss: 0.043649)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.043649)
+INFO:root:Epoch 63, Step 500, loss: 0.0606, disc_loss: 0.0025, PESQ: 2.3995
+INFO:root:TEST - Generator loss: 0.0441, Discriminator loss: 0.0051, PESQ: 2.6955
+INFO:root:? Saved checkpoint_last.pt (epoch 63, val_loss: 0.044146)
+INFO:root:Epoch 64, Step 500, loss: 0.0607, disc_loss: 0.0024, PESQ: 2.3905
+INFO:root:TEST - Generator loss: 0.0446, Discriminator loss: 0.0053, PESQ: 2.7037
+INFO:root:? Saved checkpoint_last.pt (epoch 64, val_loss: 0.044581)
+INFO:root:Epoch 65, Step 500, loss: 0.0606, disc_loss: 0.0025, PESQ: 2.3986
+INFO:root:TEST - Generator loss: 0.0443, Discriminator loss: 0.0048, PESQ: 2.6993
+INFO:root:? Saved checkpoint_last.pt (epoch 65, val_loss: 0.044284)
+INFO:root:Epoch 66, Step 500, loss: 0.0604, disc_loss: 0.0025, PESQ: 2.4033
+INFO:root:TEST - Generator loss: 0.0445, Discriminator loss: 0.0044, PESQ: 2.7558
+INFO:root:? Saved checkpoint_last.pt (epoch 66, val_loss: 0.044524)
+INFO:root:Epoch 67, Step 500, loss: 0.0602, disc_loss: 0.0025, PESQ: 2.4111
+INFO:root:TEST - Generator loss: 0.0437, Discriminator loss: 0.0041, PESQ: 2.7241
+INFO:root:? Saved checkpoint_last.pt (epoch 67, val_loss: 0.043732)
+INFO:root:Epoch 68, Step 500, loss: 0.0604, disc_loss: 0.0025, PESQ: 2.4082
+INFO:root:TEST - Generator loss: 0.0443, Discriminator loss: 0.0048, PESQ: 2.6999
+INFO:root:? Saved checkpoint_last.pt (epoch 68, val_loss: 0.044259)
+INFO:root:Epoch 69, Step 500, loss: 0.0605, disc_loss: 0.0024, PESQ: 2.4019
+INFO:root:TEST - Generator loss: 0.0438, Discriminator loss: 0.0049, PESQ: 2.7553
+INFO:root:? Saved checkpoint_last.pt (epoch 69, val_loss: 0.043759)
+INFO:root:Epoch 70, Step 500, loss: 0.0600, disc_loss: 0.0024, PESQ: 2.4173
+INFO:root:TEST - Generator loss: 0.0440, Discriminator loss: 0.0045, PESQ: 2.7051
+INFO:root:? Saved checkpoint_last.pt (epoch 70, val_loss: 0.043970)
+INFO:root:Epoch 71, Step 500, loss: 0.0604, disc_loss: 0.0025, PESQ: 2.4135
+INFO:root:TEST - Generator loss: 0.0438, Discriminator loss: 0.0047, PESQ: 2.7202
+INFO:root:? Saved checkpoint_last.pt (epoch 71, val_loss: 0.043840)
+INFO:root:Epoch 72, Step 500, loss: 0.0599, disc_loss: 0.0025, PESQ: 2.4207
+INFO:root:TEST - Generator loss: 0.0435, Discriminator loss: 0.0054, PESQ: 2.7188
+INFO:root:? Saved checkpoint_last.pt (epoch 72, val_loss: 0.043496)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.043496)
+INFO:root:Epoch 73, Step 500, loss: 0.0599, disc_loss: 0.0023, PESQ: 2.4257
+INFO:root:TEST - Generator loss: 0.0438, Discriminator loss: 0.0053, PESQ: 2.7209
+INFO:root:? Saved checkpoint_last.pt (epoch 73, val_loss: 0.043800)
+INFO:root:Epoch 74, Step 500, loss: 0.0600, disc_loss: 0.0024, PESQ: 2.4278
+INFO:root:TEST - Generator loss: 0.0442, Discriminator loss: 0.0047, PESQ: 2.7252
+INFO:root:? Saved checkpoint_last.pt (epoch 74, val_loss: 0.044247)
+INFO:root:Epoch 75, Step 500, loss: 0.0600, disc_loss: 0.0025, PESQ: 2.4235
+INFO:root:TEST - Generator loss: 0.0445, Discriminator loss: 0.0050, PESQ: 2.7006
+INFO:root:? Saved checkpoint_last.pt (epoch 75, val_loss: 0.044498)
+INFO:root:Epoch 76, Step 500, loss: 0.0597, disc_loss: 0.0024, PESQ: 2.4291
+INFO:root:TEST - Generator loss: 0.0443, Discriminator loss: 0.0053, PESQ: 2.7171
+INFO:root:? Saved checkpoint_last.pt (epoch 76, val_loss: 0.044305)
+INFO:root:Epoch 77, Step 500, loss: 0.0598, disc_loss: 0.0023, PESQ: 2.4372
+INFO:root:TEST - Generator loss: 0.0434, Discriminator loss: 0.0048, PESQ: 2.7572
+INFO:root:? Saved checkpoint_last.pt (epoch 77, val_loss: 0.043371)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.043371)
+INFO:root:Epoch 78, Step 500, loss: 0.0599, disc_loss: 0.0025, PESQ: 2.4269
+INFO:root:TEST - Generator loss: 0.0437, Discriminator loss: 0.0043, PESQ: 2.7260
+INFO:root:? Saved checkpoint_last.pt (epoch 78, val_loss: 0.043688)
+INFO:root:Epoch 79, Step 500, loss: 0.0596, disc_loss: 0.0023, PESQ: 2.4414
+INFO:root:TEST - Generator loss: 0.0434, Discriminator loss: 0.0044, PESQ: 2.7342
+INFO:root:? Saved checkpoint_last.pt (epoch 79, val_loss: 0.043388)
+INFO:root:Epoch 80, Step 500, loss: 0.0594, disc_loss: 0.0024, PESQ: 2.4477
+INFO:root:TEST - Generator loss: 0.0433, Discriminator loss: 0.0047, PESQ: 2.7266
+INFO:root:? Saved checkpoint_last.pt (epoch 80, val_loss: 0.043258)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.043258)
+INFO:root:Epoch 81, Step 500, loss: 0.0598, disc_loss: 0.0024, PESQ: 2.4372
+INFO:root:TEST - Generator loss: 0.0440, Discriminator loss: 0.0054, PESQ: 2.6736
+INFO:root:? Saved checkpoint_last.pt (epoch 81, val_loss: 0.043992)
+INFO:root:Epoch 82, Step 500, loss: 0.0595, disc_loss: 0.0024, PESQ: 2.4495
+INFO:root:TEST - Generator loss: 0.0434, Discriminator loss: 0.0055, PESQ: 2.7721
+INFO:root:? Saved checkpoint_last.pt (epoch 82, val_loss: 0.043406)
+INFO:root:Epoch 83, Step 500, loss: 0.0593, disc_loss: 0.0023, PESQ: 2.4541
+INFO:root:TEST - Generator loss: 0.0433, Discriminator loss: 0.0052, PESQ: 2.7655
+INFO:root:? Saved checkpoint_last.pt (epoch 83, val_loss: 0.043257)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.043257)
+INFO:root:Epoch 84, Step 500, loss: 0.0595, disc_loss: 0.0024, PESQ: 2.4424
+INFO:root:TEST - Generator loss: 0.0431, Discriminator loss: 0.0049, PESQ: 2.7524
+INFO:root:? Saved checkpoint_last.pt (epoch 84, val_loss: 0.043078)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.043078)
+INFO:root:Epoch 85, Step 500, loss: 0.0595, disc_loss: 0.0023, PESQ: 2.4444
+INFO:root:TEST - Generator loss: 0.0432, Discriminator loss: 0.0046, PESQ: 2.7745
+INFO:root:? Saved checkpoint_last.pt (epoch 85, val_loss: 0.043225)
+INFO:root:Epoch 86, Step 500, loss: 0.0593, disc_loss: 0.0023, PESQ: 2.4478
+INFO:root:TEST - Generator loss: 0.0444, Discriminator loss: 0.0049, PESQ: 2.7411
+INFO:root:? Saved checkpoint_last.pt (epoch 86, val_loss: 0.044414)
+INFO:root:Epoch 87, Step 500, loss: 0.0595, disc_loss: 0.0023, PESQ: 2.4536
+INFO:root:TEST - Generator loss: 0.0441, Discriminator loss: 0.0038, PESQ: 2.7793
+INFO:root:? Saved checkpoint_last.pt (epoch 87, val_loss: 0.044133)
+INFO:root:Epoch 88, Step 500, loss: 0.0593, disc_loss: 0.0023, PESQ: 2.4541
+INFO:root:TEST - Generator loss: 0.0435, Discriminator loss: 0.0055, PESQ: 2.7554
+INFO:root:? Saved checkpoint_last.pt (epoch 88, val_loss: 0.043486)
+INFO:root:Epoch 89, Step 500, loss: 0.0590, disc_loss: 0.0024, PESQ: 2.4636
+INFO:root:TEST - Generator loss: 0.0430, Discriminator loss: 0.0044, PESQ: 2.7826
+INFO:root:? Saved checkpoint_last.pt (epoch 89, val_loss: 0.042951)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.042951)
+INFO:root:Epoch 90, Step 500, loss: 0.0591, disc_loss: 0.0024, PESQ: 2.4617
+INFO:root:TEST - Generator loss: 0.0432, Discriminator loss: 0.0056, PESQ: 2.7628
+INFO:root:? Saved checkpoint_last.pt (epoch 90, val_loss: 0.043238)
+INFO:root:Epoch 91, Step 500, loss: 0.0591, disc_loss: 0.0022, PESQ: 2.4662
+INFO:root:TEST - Generator loss: 0.0429, Discriminator loss: 0.0053, PESQ: 2.7640
+INFO:root:? Saved checkpoint_last.pt (epoch 91, val_loss: 0.042925)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.042925)
+INFO:root:Epoch 92, Step 500, loss: 0.0590, disc_loss: 0.0024, PESQ: 2.4663
+INFO:root:TEST - Generator loss: 0.0450, Discriminator loss: 0.0052, PESQ: 2.7550
+INFO:root:? Saved checkpoint_last.pt (epoch 92, val_loss: 0.045000)
+INFO:root:Epoch 93, Step 500, loss: 0.0592, disc_loss: 0.0023, PESQ: 2.4674
+INFO:root:TEST - Generator loss: 0.0431, Discriminator loss: 0.0050, PESQ: 2.7727
+INFO:root:? Saved checkpoint_last.pt (epoch 93, val_loss: 0.043099)
+INFO:root:Epoch 94, Step 500, loss: 0.0590, disc_loss: 0.0024, PESQ: 2.4688
+INFO:root:TEST - Generator loss: 0.0433, Discriminator loss: 0.0047, PESQ: 2.7615
+INFO:root:? Saved checkpoint_last.pt (epoch 94, val_loss: 0.043300)
+INFO:root:Epoch 95, Step 500, loss: 0.0592, disc_loss: 0.0023, PESQ: 2.4650
+INFO:root:TEST - Generator loss: 0.0434, Discriminator loss: 0.0049, PESQ: 2.7564
+INFO:root:? Saved checkpoint_last.pt (epoch 95, val_loss: 0.043381)
+INFO:root:Epoch 96, Step 500, loss: 0.0591, disc_loss: 0.0022, PESQ: 2.4694
+INFO:root:TEST - Generator loss: 0.0432, Discriminator loss: 0.0057, PESQ: 2.7825
+INFO:root:? Saved checkpoint_last.pt (epoch 96, val_loss: 0.043197)
+INFO:root:Epoch 97, Step 500, loss: 0.0589, disc_loss: 0.0023, PESQ: 2.4723
+INFO:root:TEST - Generator loss: 0.0429, Discriminator loss: 0.0050, PESQ: 2.8044
+INFO:root:? Saved checkpoint_last.pt (epoch 97, val_loss: 0.042918)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.042918)
+INFO:root:Epoch 98, Step 500, loss: 0.0590, disc_loss: 0.0023, PESQ: 2.4688
+INFO:root:TEST - Generator loss: 0.0431, Discriminator loss: 0.0048, PESQ: 2.7540
+INFO:root:? Saved checkpoint_last.pt (epoch 98, val_loss: 0.043093)
+INFO:root:Epoch 99, Step 500, loss: 0.0588, disc_loss: 0.0023, PESQ: 2.4749
+INFO:root:TEST - Generator loss: 0.0429, Discriminator loss: 0.0047, PESQ: 2.7662
+INFO:root:? Saved checkpoint_last.pt (epoch 99, val_loss: 0.042912)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.042912)
+INFO:root:Epoch 100, Step 500, loss: 0.0587, disc_loss: 0.0023, PESQ: 2.4770
+INFO:root:TEST - Generator loss: 0.0440, Discriminator loss: 0.0041, PESQ: 2.7456
+INFO:root:? Saved checkpoint_last.pt (epoch 100, val_loss: 0.043955)
+INFO:root:Epoch 101, Step 500, loss: 0.0588, disc_loss: 0.0023, PESQ: 2.4781
+INFO:root:TEST - Generator loss: 0.0429, Discriminator loss: 0.0046, PESQ: 2.8100
+INFO:root:? Saved checkpoint_last.pt (epoch 101, val_loss: 0.042928)
+INFO:root:Epoch 102, Step 500, loss: 0.0589, disc_loss: 0.0023, PESQ: 2.4778
+INFO:root:TEST - Generator loss: 0.0429, Discriminator loss: 0.0044, PESQ: 2.7940
+INFO:root:? Saved checkpoint_last.pt (epoch 102, val_loss: 0.042919)
+INFO:root:Epoch 103, Step 500, loss: 0.0588, disc_loss: 0.0023, PESQ: 2.4808
+INFO:root:TEST - Generator loss: 0.0438, Discriminator loss: 0.0045, PESQ: 2.7586
+INFO:root:? Saved checkpoint_last.pt (epoch 103, val_loss: 0.043783)
+INFO:root:Epoch 104, Step 500, loss: 0.0586, disc_loss: 0.0022, PESQ: 2.4895
+INFO:root:TEST - Generator loss: 0.0440, Discriminator loss: 0.0052, PESQ: 2.7394
+INFO:root:? Saved checkpoint_last.pt (epoch 104, val_loss: 0.043953)
+INFO:root:Epoch 105, Step 500, loss: 0.0585, disc_loss: 0.0022, PESQ: 2.4892
+INFO:root:TEST - Generator loss: 0.0433, Discriminator loss: 0.0050, PESQ: 2.7688
+INFO:root:? Saved checkpoint_last.pt (epoch 105, val_loss: 0.043265)
+INFO:root:Epoch 106, Step 500, loss: 0.0586, disc_loss: 0.0023, PESQ: 2.4836
+INFO:root:TEST - Generator loss: 0.0430, Discriminator loss: 0.0046, PESQ: 2.7665
+INFO:root:? Saved checkpoint_last.pt (epoch 106, val_loss: 0.042989)
+INFO:root:Epoch 107, Step 500, loss: 0.0584, disc_loss: 0.0024, PESQ: 2.4872
+INFO:root:TEST - Generator loss: 0.0438, Discriminator loss: 0.0045, PESQ: 2.7840
+INFO:root:? Saved checkpoint_last.pt (epoch 107, val_loss: 0.043773)
+INFO:root:Epoch 108, Step 500, loss: 0.0586, disc_loss: 0.0023, PESQ: 2.4891
+INFO:root:TEST - Generator loss: 0.0446, Discriminator loss: 0.0050, PESQ: 2.7821
+INFO:root:? Saved checkpoint_last.pt (epoch 108, val_loss: 0.044603)
+INFO:root:Epoch 109, Step 500, loss: 0.0587, disc_loss: 0.0023, PESQ: 2.4885
+INFO:root:TEST - Generator loss: 0.0427, Discriminator loss: 0.0050, PESQ: 2.7771
+INFO:root:? Saved checkpoint_last.pt (epoch 109, val_loss: 0.042692)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.042692)
+INFO:root:Epoch 110, Step 500, loss: 0.0585, disc_loss: 0.0023, PESQ: 2.4866
+INFO:root:TEST - Generator loss: 0.0429, Discriminator loss: 0.0048, PESQ: 2.7800
+INFO:root:? Saved checkpoint_last.pt (epoch 110, val_loss: 0.042945)
+INFO:root:Epoch 111, Step 500, loss: 0.0582, disc_loss: 0.0022, PESQ: 2.4967
+INFO:root:TEST - Generator loss: 0.0430, Discriminator loss: 0.0046, PESQ: 2.7594
+INFO:root:? Saved checkpoint_last.pt (epoch 111, val_loss: 0.042989)
+INFO:root:Epoch 112, Step 500, loss: 0.0580, disc_loss: 0.0022, PESQ: 2.5075
+INFO:root:TEST - Generator loss: 0.0431, Discriminator loss: 0.0044, PESQ: 2.7423
+INFO:root:? Saved checkpoint_last.pt (epoch 112, val_loss: 0.043062)
+INFO:root:Epoch 113, Step 500, loss: 0.0585, disc_loss: 0.0023, PESQ: 2.4912
+INFO:root:TEST - Generator loss: 0.0428, Discriminator loss: 0.0045, PESQ: 2.7832
+INFO:root:? Saved checkpoint_last.pt (epoch 113, val_loss: 0.042846)
+INFO:root:Epoch 114, Step 500, loss: 0.0585, disc_loss: 0.0023, PESQ: 2.4906
+INFO:root:TEST - Generator loss: 0.0428, Discriminator loss: 0.0043, PESQ: 2.8121
+INFO:root:? Saved checkpoint_last.pt (epoch 114, val_loss: 0.042833)
+INFO:root:Epoch 115, Step 500, loss: 0.0586, disc_loss: 0.0022, PESQ: 2.4956
+INFO:root:TEST - Generator loss: 0.0435, Discriminator loss: 0.0056, PESQ: 2.7296
+INFO:root:? Saved checkpoint_last.pt (epoch 115, val_loss: 0.043546)
+INFO:root:Epoch 116, Step 500, loss: 0.0578, disc_loss: 0.0022, PESQ: 2.5117
+INFO:root:TEST - Generator loss: 0.0431, Discriminator loss: 0.0043, PESQ: 2.8026
+INFO:root:? Saved checkpoint_last.pt (epoch 116, val_loss: 0.043137)
+INFO:root:Epoch 117, Step 500, loss: 0.0581, disc_loss: 0.0023, PESQ: 2.5051
+INFO:root:TEST - Generator loss: 0.0429, Discriminator loss: 0.0042, PESQ: 2.8058
+INFO:root:? Saved checkpoint_last.pt (epoch 117, val_loss: 0.042941)
+INFO:root:Epoch 118, Step 500, loss: 0.0582, disc_loss: 0.0022, PESQ: 2.5091
+INFO:root:TEST - Generator loss: 0.0426, Discriminator loss: 0.0047, PESQ: 2.7795
+INFO:root:? Saved checkpoint_last.pt (epoch 118, val_loss: 0.042571)
+INFO:root:?? NEW BEST! Saved checkpoint_best.pt (val_loss: 0.042571)
+INFO:root:Epoch 119, Step 500, loss: 0.0584, disc_loss: 0.0022, PESQ: 2.4937
+INFO:root:TEST - Generator loss: 0.0432, Discriminator loss: 0.0042, PESQ: 2.7835
+INFO:root:? Saved checkpoint_last.pt (epoch 119, val_loss: 0.043184)
+INFO:root:Epoch 120, Step 500, loss: 0.0581, disc_loss: 0.0022, PESQ: 2.5054
+INFO:root:TEST - Generator loss: 0.0429, Discriminator loss: 0.0050, PESQ: 2.8228
+INFO:root:? Saved checkpoint_last.pt (epoch 120, val_loss: 0.042912)
+INFO:root:Epoch 121, Step 500, loss: 0.0582, disc_loss: 0.0022, PESQ: 2.5003
+INFO:root:TEST - Generator loss: 0.0430, Discriminator loss: 0.0042, PESQ: 2.7956
+INFO:root:? Saved checkpoint_last.pt (epoch 121, val_loss: 0.042965)
+INFO:root:Epoch 122, Step 500, loss: 0.0580, disc_loss: 0.0022, PESQ: 2.5105
+INFO:root:TEST - Generator loss: 0.0429, Discriminator loss: 0.0051, PESQ: 2.7700
+INFO:root:? Saved checkpoint_last.pt (epoch 122, val_loss: 0.042876)
+INFO:root:Epoch 123, Step 500, loss: 0.0580, disc_loss: 0.0021, PESQ: 2.5065
+INFO:root:TEST - Generator loss: 0.0450, Discriminator loss: 0.0053, PESQ: 2.7728
+INFO:root:? Saved checkpoint_last.pt (epoch 123, val_loss: 0.045026)
+INFO:root:Epoch 124, Step 500, loss: 0.0582, disc_loss: 0.0022, PESQ: 2.5017
+INFO:root:TEST - Generator loss: 0.0426, Discriminator loss: 0.0048, PESQ: 2.7937
+INFO:root:? Saved checkpoint_last.pt (epoch 124, val_loss: 0.042622)
+INFO:root:Epoch 125, Step 500, loss: 0.2800, disc_loss: 0.0024, PESQ: 2.3766
+INFO:root:TEST - Generator loss: 0.2047, Discriminator loss: 0.0022, PESQ: 2.7787
+INFO:root:? Saved checkpoint_last.pt (epoch 125, val_loss: 0.204687)
+INFO:root:Epoch 126, Step 500, loss: 0.2678, disc_loss: 0.0020, PESQ: 2.4513
+INFO:root:TEST - Generator loss: 0.2053, Discriminator loss: 0.0027, PESQ: 2.8187
+INFO:root:? Saved checkpoint_last.pt (epoch 126, val_loss: 0.205257)
+INFO:root:Epoch 127, Step 500, loss: 0.2627, disc_loss: 0.0020, PESQ: 2.4691
+INFO:root:TEST - Generator loss: 0.1950, Discriminator loss: 0.0025, PESQ: 2.8263
+INFO:root:? Saved checkpoint_last.pt (epoch 127, val_loss: 0.195032)
+INFO:root:Epoch 128, Step 500, loss: 0.2604, disc_loss: 0.0020, PESQ: 2.5035
+INFO:root:TEST - Generator loss: 0.1983, Discriminator loss: 0.0023, PESQ: 2.8550
+INFO:root:? Saved checkpoint_last.pt (epoch 128, val_loss: 0.198300)
+INFO:root:Epoch 129, Step 500, loss: 0.2595, disc_loss: 0.0020, PESQ: 2.5114
+INFO:root:TEST - Generator loss: 0.1933, Discriminator loss: 0.0021, PESQ: 2.8237
+INFO:root:? Saved checkpoint_last.pt (epoch 129, val_loss: 0.193254)
+INFO:root:Epoch 130, Step 500, loss: 0.2611, disc_loss: 0.0019, PESQ: 2.5069
+INFO:root:TEST - Generator loss: 0.1882, Discriminator loss: 0.0017, PESQ: 2.8843
+INFO:root:? Saved checkpoint_last.pt (epoch 130, val_loss: 0.188228)
+INFO:root:Epoch 131, Step 500, loss: 0.2608, disc_loss: 0.0019, PESQ: 2.5188
+INFO:root:TEST - Generator loss: 0.1999, Discriminator loss: 0.0025, PESQ: 2.8678
+INFO:root:? Saved checkpoint_last.pt (epoch 131, val_loss: 0.199900)
+INFO:root:Epoch 132, Step 500, loss: 0.2606, disc_loss: 0.0019, PESQ: 2.5184
+INFO:root:TEST - Generator loss: 0.1853, Discriminator loss: 0.0022, PESQ: 2.8664
+INFO:root:? Saved checkpoint_last.pt (epoch 132, val_loss: 0.185334)
+INFO:root:Epoch 133, Step 500, loss: 0.2618, disc_loss: 0.0019, PESQ: 2.5143
+INFO:root:TEST - Generator loss: 0.2012, Discriminator loss: 0.0021, PESQ: 2.8290
+INFO:root:? Saved checkpoint_last.pt (epoch 133, val_loss: 0.201157)
+INFO:root:Epoch 134, Step 500, loss: 0.2651, disc_loss: 0.0019, PESQ: 2.4917
+INFO:root:TEST - Generator loss: 0.1847, Discriminator loss: 0.0018, PESQ: 2.8606
+INFO:root:? Saved checkpoint_last.pt (epoch 134, val_loss: 0.184686)
+INFO:root:Epoch 135, Step 500, loss: 0.2605, disc_loss: 0.0019, PESQ: 2.5173
+INFO:root:TEST - Generator loss: 0.1956, Discriminator loss: 0.0022, PESQ: 2.8819
+INFO:root:? Saved checkpoint_last.pt (epoch 135, val_loss: 0.195644)
+INFO:root:Epoch 136, Step 500, loss: 0.2574, disc_loss: 0.0019, PESQ: 2.5360
+INFO:root:TEST - Generator loss: 0.1791, Discriminator loss: 0.0019, PESQ: 2.9231
+INFO:root:? Saved checkpoint_last.pt (epoch 136, val_loss: 0.179100)
+INFO:root:Epoch 137, Step 500, loss: 0.2545, disc_loss: 0.0019, PESQ: 2.5568
+INFO:root:TEST - Generator loss: 0.1830, Discriminator loss: 0.0018, PESQ: 2.9278
+INFO:root:? Saved checkpoint_last.pt (epoch 137, val_loss: 0.183011)
+INFO:root:Epoch 138, Step 500, loss: 0.2506, disc_loss: 0.0018, PESQ: 2.5605
+INFO:root:TEST - Generator loss: 0.1827, Discriminator loss: 0.0021, PESQ: 2.9037
+INFO:root:? Saved checkpoint_last.pt (epoch 138, val_loss: 0.182672)
+INFO:root:Epoch 139, Step 500, loss: 0.2489, disc_loss: 0.0019, PESQ: 2.5734
+INFO:root:TEST - Generator loss: 0.1781, Discriminator loss: 0.0022, PESQ: 2.9317
+INFO:root:? Saved checkpoint_last.pt (epoch 139, val_loss: 0.178114)
+INFO:root:Epoch 140, Step 500, loss: 0.2496, disc_loss: 0.0018, PESQ: 2.5705
+INFO:root:TEST - Generator loss: 0.1792, Discriminator loss: 0.0019, PESQ: 2.9707
+INFO:root:? Saved checkpoint_last.pt (epoch 140, val_loss: 0.179171)
+INFO:root:Epoch 141, Step 500, loss: 0.2462, disc_loss: 0.0019, PESQ: 2.5896
+INFO:root:TEST - Generator loss: 0.1797, Discriminator loss: 0.0023, PESQ: 2.9519
+INFO:root:? Saved checkpoint_last.pt (epoch 141, val_loss: 0.179657)
+INFO:root:Epoch 142, Step 500, loss: 0.2446, disc_loss: 0.0019, PESQ: 2.6051
+INFO:root:TEST - Generator loss: 0.1780, Discriminator loss: 0.0018, PESQ: 2.9749
+INFO:root:? Saved checkpoint_last.pt (epoch 142, val_loss: 0.178043)
+INFO:root:Epoch 143, Step 500, loss: 0.2440, disc_loss: 0.0018, PESQ: 2.6119
+INFO:root:TEST - Generator loss: 0.1771, Discriminator loss: 0.0018, PESQ: 2.9677
+INFO:root:? Saved checkpoint_last.pt (epoch 143, val_loss: 0.177118)
+INFO:root:Epoch 144, Step 500, loss: 0.2418, disc_loss: 0.0019, PESQ: 2.6189
+INFO:root:TEST - Generator loss: 0.1738, Discriminator loss: 0.0020, PESQ: 2.9523
+INFO:root:? Saved checkpoint_last.pt (epoch 144, val_loss: 0.173834)
+INFO:root:Epoch 145, Step 500, loss: 0.2416, disc_loss: 0.0019, PESQ: 2.6230
+INFO:root:TEST - Generator loss: 0.1731, Discriminator loss: 0.0017, PESQ: 2.9641
+INFO:root:? Saved checkpoint_last.pt (epoch 145, val_loss: 0.173067)
+INFO:root:Epoch 146, Step 500, loss: 0.2431, disc_loss: 0.0018, PESQ: 2.6142
+INFO:root:TEST - Generator loss: 0.1830, Discriminator loss: 0.0025, PESQ: 2.9062
+INFO:root:? Saved checkpoint_last.pt (epoch 146, val_loss: 0.182972)
+INFO:root:Epoch 147, Step 500, loss: 0.2453, disc_loss: 0.0018, PESQ: 2.5985
+INFO:root:TEST - Generator loss: 0.1769, Discriminator loss: 0.0024, PESQ: 2.9785
+INFO:root:? Saved checkpoint_last.pt (epoch 147, val_loss: 0.176869)
+INFO:root:Epoch 148, Step 500, loss: 0.2410, disc_loss: 0.0019, PESQ: 2.6247
+INFO:root:TEST - Generator loss: 0.1743, Discriminator loss: 0.0019, PESQ: 2.9618
+INFO:root:? Saved checkpoint_last.pt (epoch 148, val_loss: 0.174256)
+INFO:root:Epoch 149, Step 500, loss: 0.2407, disc_loss: 0.0019, PESQ: 2.6290
+INFO:root:TEST - Generator loss: 0.1692, Discriminator loss: 0.0018, PESQ: 2.9731
+INFO:root:? Saved checkpoint_last.pt (epoch 149, val_loss: 0.169178)
+INFO:root:Epoch 150, Step 500, loss: 0.2399, disc_loss: 0.0018, PESQ: 2.6293
+INFO:root:TEST - Generator loss: 0.1792, Discriminator loss: 0.0021, PESQ: 2.9639
+INFO:root:? Saved checkpoint_last.pt (epoch 150, val_loss: 0.179167)
+INFO:root:Epoch 151, Step 500, loss: 0.2433, disc_loss: 0.0018, PESQ: 2.6148
+INFO:root:TEST - Generator loss: 0.1764, Discriminator loss: 0.0018, PESQ: 2.9654
+INFO:root:? Saved checkpoint_last.pt (epoch 151, val_loss: 0.176419)
+INFO:root:Epoch 152, Step 500, loss: 0.2397, disc_loss: 0.0018, PESQ: 2.6337
+INFO:root:TEST - Generator loss: 0.1801, Discriminator loss: 0.0022, PESQ: 2.9180
+INFO:root:? Saved checkpoint_last.pt (epoch 152, val_loss: 0.180147)
+INFO:root:Epoch 153, Step 500, loss: 0.2447, disc_loss: 0.0019, PESQ: 2.5931
+INFO:root:TEST - Generator loss: 0.1760, Discriminator loss: 0.0020, PESQ: 2.9352
+INFO:root:? Saved checkpoint_last.pt (epoch 153, val_loss: 0.176025)
+INFO:root:Epoch 154, Step 500, loss: 0.2454, disc_loss: 0.0019, PESQ: 2.5810
+INFO:root:TEST - Generator loss: 0.1744, Discriminator loss: 0.0025, PESQ: 2.9242
+INFO:root:? Saved checkpoint_last.pt (epoch 154, val_loss: 0.174411)
+INFO:root:Epoch 155, Step 500, loss: 0.2464, disc_loss: 0.0019, PESQ: 2.5754
+INFO:root:TEST - Generator loss: 0.1843, Discriminator loss: 0.0026, PESQ: 2.8966
+INFO:root:? Saved checkpoint_last.pt (epoch 155, val_loss: 0.184251)
+INFO:root:Epoch 156, Step 500, loss: 0.2427, disc_loss: 0.0019, PESQ: 2.6036
+INFO:root:TEST - Generator loss: 0.1774, Discriminator loss: 0.0024, PESQ: 2.9396
+INFO:root:? Saved checkpoint_last.pt (epoch 156, val_loss: 0.177392)
+INFO:root:Epoch 157, Step 500, loss: 0.2440, disc_loss: 0.0019, PESQ: 2.5959
+INFO:root:TEST - Generator loss: 0.1735, Discriminator loss: 0.0022, PESQ: 2.9680
+INFO:root:? Saved checkpoint_last.pt (epoch 157, val_loss: 0.173542)
+INFO:root:Epoch 158, Step 500, loss: 0.2421, disc_loss: 0.0018, PESQ: 2.6044
+INFO:root:TEST - Generator loss: 0.1666, Discriminator loss: 0.0019, PESQ: 2.9601
+INFO:root:? Saved checkpoint_last.pt (epoch 158, val_loss: 0.166606)
+INFO:root:Epoch 159, Step 500, loss: 0.2409, disc_loss: 0.0018, PESQ: 2.6139
+INFO:root:TEST - Generator loss: 0.1712, Discriminator loss: 0.0020, PESQ: 2.9515
+INFO:root:? Saved checkpoint_last.pt (epoch 159, val_loss: 0.171203)
+INFO:root:Epoch 160, Step 500, loss: 0.2391, disc_loss: 0.0018, PESQ: 2.6238
+INFO:root:TEST - Generator loss: 0.1744, Discriminator loss: 0.0021, PESQ: 2.9786
+INFO:root:? Saved checkpoint_last.pt (epoch 160, val_loss: 0.174403)
+INFO:root:Epoch 161, Step 500, loss: 0.2359, disc_loss: 0.0018, PESQ: 2.6492
+INFO:root:TEST - Generator loss: 0.1777, Discriminator loss: 0.0023, PESQ: 2.9555
+INFO:root:? Saved checkpoint_last.pt (epoch 161, val_loss: 0.177665)
+INFO:root:Epoch 162, Step 500, loss: 0.2390, disc_loss: 0.0018, PESQ: 2.6274
+INFO:root:TEST - Generator loss: 0.1741, Discriminator loss: 0.0020, PESQ: 2.9518
+INFO:root:? Saved checkpoint_last.pt (epoch 162, val_loss: 0.174082)
+INFO:root:Epoch 163, Step 500, loss: 0.2383, disc_loss: 0.0018, PESQ: 2.6375
+INFO:root:TEST - Generator loss: 0.1779, Discriminator loss: 0.0019, PESQ: 2.9664
+INFO:root:? Saved checkpoint_last.pt (epoch 163, val_loss: 0.177869)
+INFO:root:Epoch 164, Step 500, loss: 0.2387, disc_loss: 0.0018, PESQ: 2.6305
+INFO:root:TEST - Generator loss: 0.1656, Discriminator loss: 0.0017, PESQ: 2.9820
+INFO:root:? Saved checkpoint_last.pt (epoch 164, val_loss: 0.165599)
+INFO:root:Epoch 165, Step 500, loss: 0.2368, disc_loss: 0.0017, PESQ: 2.6456
+INFO:root:TEST - Generator loss: 0.1704, Discriminator loss: 0.0022, PESQ: 2.9833
+INFO:root:? Saved checkpoint_last.pt (epoch 165, val_loss: 0.170448)
+INFO:root:Epoch 166, Step 500, loss: 0.2347, disc_loss: 0.0017, PESQ: 2.6551
+INFO:root:TEST - Generator loss: 0.1706, Discriminator loss: 0.0020, PESQ: 2.9712
+INFO:root:? Saved checkpoint_last.pt (epoch 166, val_loss: 0.170637)
+INFO:root:Epoch 167, Step 500, loss: 0.2345, disc_loss: 0.0017, PESQ: 2.6577
+INFO:root:TEST - Generator loss: 0.1723, Discriminator loss: 0.0022, PESQ: 2.9824
+INFO:root:? Saved checkpoint_last.pt (epoch 167, val_loss: 0.172265)
+INFO:root:Epoch 168, Step 500, loss: 0.2338, disc_loss: 0.0017, PESQ: 2.6606
+INFO:root:TEST - Generator loss: 0.1642, Discriminator loss: 0.0022, PESQ: 2.9581
+INFO:root:? Saved checkpoint_last.pt (epoch 168, val_loss: 0.164192)
+INFO:root:Epoch 169, Step 500, loss: 0.2345, disc_loss: 0.0017, PESQ: 2.6521
+INFO:root:TEST - Generator loss: 0.1651, Discriminator loss: 0.0021, PESQ: 2.9905
+INFO:root:? Saved checkpoint_last.pt (epoch 169, val_loss: 0.165114)
+INFO:root:Epoch 170, Step 500, loss: 0.2363, disc_loss: 0.0017, PESQ: 2.6409
+INFO:root:TEST - Generator loss: 0.1695, Discriminator loss: 0.0019, PESQ: 2.9583
+INFO:root:? Saved checkpoint_last.pt (epoch 170, val_loss: 0.169501)
+INFO:root:Epoch 171, Step 500, loss: 0.2356, disc_loss: 0.0017, PESQ: 2.6444
+INFO:root:TEST - Generator loss: 0.1734, Discriminator loss: 0.0021, PESQ: 2.9532
+INFO:root:? Saved checkpoint_last.pt (epoch 171, val_loss: 0.173439)
+INFO:root:Epoch 172, Step 500, loss: 0.2352, disc_loss: 0.0017, PESQ: 2.6516
+INFO:root:TEST - Generator loss: 0.1706, Discriminator loss: 0.0020, PESQ: 2.9467
+INFO:root:? Saved checkpoint_last.pt (epoch 172, val_loss: 0.170649)
+INFO:root:Epoch 173, Step 500, loss: 0.2429, disc_loss: 0.0017, PESQ: 2.5907
+INFO:root:TEST - Generator loss: 0.1843, Discriminator loss: 0.0023, PESQ: 2.8929
+INFO:root:? Saved checkpoint_last.pt (epoch 173, val_loss: 0.184350)
+INFO:root:Epoch 174, Step 500, loss: 0.2451, disc_loss: 0.0017, PESQ: 2.5826
+INFO:root:TEST - Generator loss: 0.1719, Discriminator loss: 0.0018, PESQ: 2.9480
+INFO:root:? Saved checkpoint_last.pt (epoch 174, val_loss: 0.171903)
+INFO:root:Epoch 175, Step 500, loss: 0.2359, disc_loss: 0.0017, PESQ: 2.6421
+INFO:root:TEST - Generator loss: 0.1708, Discriminator loss: 0.0018, PESQ: 2.9866
+INFO:root:? Saved checkpoint_last.pt (epoch 175, val_loss: 0.170812)
+INFO:root:Epoch 176, Step 500, loss: 0.2358, disc_loss: 0.0017, PESQ: 2.6462
+INFO:root:TEST - Generator loss: 0.1740, Discriminator loss: 0.0020, PESQ: 2.9591
+INFO:root:? Saved checkpoint_last.pt (epoch 176, val_loss: 0.174006)
+INFO:root:Epoch 177, Step 500, loss: 0.2330, disc_loss: 0.0017, PESQ: 2.6563
+INFO:root:TEST - Generator loss: 0.1758, Discriminator loss: 0.0020, PESQ: 2.9459
+INFO:root:? Saved checkpoint_last.pt (epoch 177, val_loss: 0.175781)
+INFO:root:Epoch 178, Step 500, loss: 0.2363, disc_loss: 0.0017, PESQ: 2.6412
+INFO:root:TEST - Generator loss: 0.1704, Discriminator loss: 0.0018, PESQ: 2.9528
+INFO:root:? Saved checkpoint_last.pt (epoch 178, val_loss: 0.170395)
+INFO:root:Epoch 179, Step 500, loss: 0.2365, disc_loss: 0.0017, PESQ: 2.6438
+INFO:root:TEST - Generator loss: 0.1735, Discriminator loss: 0.0024, PESQ: 2.9532
+INFO:root:? Saved checkpoint_last.pt (epoch 179, val_loss: 0.173459)
+INFO:root:Epoch 180, Step 500, loss: 0.2348, disc_loss: 0.0017, PESQ: 2.6523
+INFO:root:TEST - Generator loss: 0.1698, Discriminator loss: 0.0022, PESQ: 2.9689
+INFO:root:? Saved checkpoint_last.pt (epoch 180, val_loss: 0.169774)
+INFO:root:Epoch 181, Step 500, loss: 0.2317, disc_loss: 0.0017, PESQ: 2.6699
+INFO:root:TEST - Generator loss: 0.1686, Discriminator loss: 0.0023, PESQ: 2.9876
+INFO:root:? Saved checkpoint_last.pt (epoch 181, val_loss: 0.168626)
+INFO:root:Epoch 182, Step 500, loss: 0.2326, disc_loss: 0.0018, PESQ: 2.6633
+INFO:root:TEST - Generator loss: 0.1813, Discriminator loss: 0.0020, PESQ: 2.9540
+INFO:root:? Saved checkpoint_last.pt (epoch 182, val_loss: 0.181259)
+INFO:root:Epoch 183, Step 500, loss: 0.2373, disc_loss: 0.0017, PESQ: 2.6332
+INFO:root:TEST - Generator loss: 0.1757, Discriminator loss: 0.0020, PESQ: 2.9425
+INFO:root:? Saved checkpoint_last.pt (epoch 183, val_loss: 0.175674)
+INFO:root:Epoch 184, Step 500, loss: 0.2340, disc_loss: 0.0016, PESQ: 2.6566
+INFO:root:TEST - Generator loss: 0.1700, Discriminator loss: 0.0017, PESQ: 2.9915
+INFO:root:? Saved checkpoint_last.pt (epoch 184, val_loss: 0.170001)
+INFO:root:Epoch 185, Step 500, loss: 0.2320, disc_loss: 0.0017, PESQ: 2.6695
+INFO:root:TEST - Generator loss: 0.1721, Discriminator loss: 0.0018, PESQ: 2.9770
+INFO:root:? Saved checkpoint_last.pt (epoch 185, val_loss: 0.172129)
+INFO:root:Epoch 186, Step 500, loss: 0.2325, disc_loss: 0.0016, PESQ: 2.6648
+INFO:root:TEST - Generator loss: 0.1666, Discriminator loss: 0.0021, PESQ: 2.9808
+INFO:root:? Saved checkpoint_last.pt (epoch 186, val_loss: 0.166556)
+INFO:root:Epoch 187, Step 500, loss: 0.2323, disc_loss: 0.0017, PESQ: 2.6644
+INFO:root:TEST - Generator loss: 0.1671, Discriminator loss: 0.0019, PESQ: 2.9827
+INFO:root:? Saved checkpoint_last.pt (epoch 187, val_loss: 0.167101)
+INFO:root:Epoch 188, Step 500, loss: 0.2326, disc_loss: 0.0016, PESQ: 2.6668
+INFO:root:TEST - Generator loss: 0.1678, Discriminator loss: 0.0021, PESQ: 2.9922
+INFO:root:? Saved checkpoint_last.pt (epoch 188, val_loss: 0.167789)
+INFO:root:Epoch 189, Step 500, loss: 0.2308, disc_loss: 0.0017, PESQ: 2.6751
+INFO:root:TEST - Generator loss: 0.1685, Discriminator loss: 0.0022, PESQ: 2.9329
+INFO:root:? Saved checkpoint_last.pt (epoch 189, val_loss: 0.168524)
+INFO:root:Epoch 190, Step 500, loss: 0.2353, disc_loss: 0.0017, PESQ: 2.6457
+INFO:root:TEST - Generator loss: 0.1726, Discriminator loss: 0.0020, PESQ: 2.9324
+INFO:root:? Saved checkpoint_last.pt (epoch 190, val_loss: 0.172585)
+INFO:root:Epoch 191, Step 500, loss: 0.2346, disc_loss: 0.0017, PESQ: 2.6503
+INFO:root:TEST - Generator loss: 0.1662, Discriminator loss: 0.0021, PESQ: 2.9670
+INFO:root:? Saved checkpoint_last.pt (epoch 191, val_loss: 0.166214)
+INFO:root:Epoch 192, Step 500, loss: 0.2339, disc_loss: 0.0016, PESQ: 2.6507
+INFO:root:TEST - Generator loss: 0.1845, Discriminator loss: 0.0023, PESQ: 2.9263
+INFO:root:? Saved checkpoint_last.pt (epoch 192, val_loss: 0.184521)
+INFO:root:Epoch 193, Step 500, loss: 0.2357, disc_loss: 0.0016, PESQ: 2.6415
+INFO:root:TEST - Generator loss: 0.1661, Discriminator loss: 0.0020, PESQ: 2.9907
+INFO:root:? Saved checkpoint_last.pt (epoch 193, val_loss: 0.166137)
+INFO:root:Epoch 194, Step 500, loss: 0.2323, disc_loss: 0.0017, PESQ: 2.6650
+INFO:root:TEST - Generator loss: 0.1719, Discriminator loss: 0.0019, PESQ: 2.9636
+INFO:root:? Saved checkpoint_last.pt (epoch 194, val_loss: 0.171882)
+INFO:root:Epoch 195, Step 500, loss: 0.2319, disc_loss: 0.0018, PESQ: 2.6692
+INFO:root:TEST - Generator loss: 0.1642, Discriminator loss: 0.0017, PESQ: 2.9766
+INFO:root:? Saved checkpoint_last.pt (epoch 195, val_loss: 0.164173)
+INFO:root:Epoch 196, Step 500, loss: 0.2319, disc_loss: 0.0016, PESQ: 2.6655
+INFO:root:TEST - Generator loss: 0.1693, Discriminator loss: 0.0017, PESQ: 2.9898
+INFO:root:? Saved checkpoint_last.pt (epoch 196, val_loss: 0.169260)
+INFO:root:Epoch 197, Step 500, loss: 0.2304, disc_loss: 0.0016, PESQ: 2.6753
+INFO:root:TEST - Generator loss: 0.1684, Discriminator loss: 0.0019, PESQ: 2.9730
+INFO:root:? Saved checkpoint_last.pt (epoch 197, val_loss: 0.168413)
+INFO:root:Epoch 198, Step 500, loss: 0.2315, disc_loss: 0.0016, PESQ: 2.6713
+INFO:root:TEST - Generator loss: 0.1680, Discriminator loss: 0.0021, PESQ: 2.9924
+INFO:root:? Saved checkpoint_last.pt (epoch 198, val_loss: 0.167979)
+INFO:root:Epoch 199, Step 500, loss: 0.2298, disc_loss: 0.0016, PESQ: 2.6795
+INFO:root:TEST - Generator loss: 0.1625, Discriminator loss: 0.0019, PESQ: 2.9883
+INFO:root:? Saved checkpoint_last.pt (epoch 199, val_loss: 0.162471)
+INFO:root:Epoch 200, Step 500, loss: 0.2288, disc_loss: 0.0017, PESQ: 2.6883
+INFO:root:TEST - Generator loss: 0.1733, Discriminator loss: 0.0023, PESQ: 2.9680
+INFO:root:? Saved checkpoint_last.pt (epoch 200, val_loss: 0.173281)
+INFO:root:Epoch 201, Step 500, loss: 0.2318, disc_loss: 0.0016, PESQ: 2.6716
+INFO:root:TEST - Generator loss: 0.1761, Discriminator loss: 0.0019, PESQ: 2.9672
+INFO:root:? Saved checkpoint_last.pt (epoch 201, val_loss: 0.176097)
+INFO:root:Epoch 202, Step 500, loss: 0.2299, disc_loss: 0.0016, PESQ: 2.6792
+INFO:root:TEST - Generator loss: 0.1644, Discriminator loss: 0.0018, PESQ: 2.9793
+INFO:root:? Saved checkpoint_last.pt (epoch 202, val_loss: 0.164361)
+INFO:root:Epoch 203, Step 500, loss: 0.2293, disc_loss: 0.0016, PESQ: 2.6840
+INFO:root:TEST - Generator loss: 0.1734, Discriminator loss: 0.0016, PESQ: 2.9811
+INFO:root:? Saved checkpoint_last.pt (epoch 203, val_loss: 0.173409)
+INFO:root:Epoch 204, Step 500, loss: 0.2304, disc_loss: 0.0016, PESQ: 2.6762
+INFO:root:TEST - Generator loss: 0.1697, Discriminator loss: 0.0016, PESQ: 2.9703
+INFO:root:? Saved checkpoint_last.pt (epoch 204, val_loss: 0.169704)
+INFO:root:Epoch 205, Step 500, loss: 0.2308, disc_loss: 0.0017, PESQ: 2.6758
+INFO:root:TEST - Generator loss: 0.1673, Discriminator loss: 0.0020, PESQ: 2.9761
+INFO:root:? Saved checkpoint_last.pt (epoch 205, val_loss: 0.167310)
+INFO:root:Epoch 206, Step 500, loss: 0.2301, disc_loss: 0.0016, PESQ: 2.6792
+INFO:root:TEST - Generator loss: 0.1718, Discriminator loss: 0.0019, PESQ: 2.9654
+INFO:root:? Saved checkpoint_last.pt (epoch 206, val_loss: 0.171845)
+INFO:root:Epoch 207, Step 500, loss: 0.2312, disc_loss: 0.0016, PESQ: 2.6703
+INFO:root:TEST - Generator loss: 0.1715, Discriminator loss: 0.0021, PESQ: 2.9850
+INFO:root:? Saved checkpoint_last.pt (epoch 207, val_loss: 0.171476)
+INFO:root:Epoch 208, Step 500, loss: 0.2304, disc_loss: 0.0016, PESQ: 2.6762
+INFO:root:TEST - Generator loss: 0.1700, Discriminator loss: 0.0018, PESQ: 2.9773
+INFO:root:? Saved checkpoint_last.pt (epoch 208, val_loss: 0.169995)
+INFO:root:Epoch 209, Step 500, loss: 0.2297, disc_loss: 0.0016, PESQ: 2.6825
+INFO:root:TEST - Generator loss: 0.1753, Discriminator loss: 0.0027, PESQ: 2.9739
+INFO:root:? Saved checkpoint_last.pt (epoch 209, val_loss: 0.175313)
+INFO:root:Epoch 210, Step 500, loss: 0.2302, disc_loss: 0.0016, PESQ: 2.6802
+INFO:root:TEST - Generator loss: 0.1746, Discriminator loss: 0.0018, PESQ: 2.9715
+INFO:root:? Saved checkpoint_last.pt (epoch 210, val_loss: 0.174595)
+INFO:root:Epoch 211, Step 500, loss: 0.2311, disc_loss: 0.0016, PESQ: 2.6739
+INFO:root:TEST - Generator loss: 0.1689, Discriminator loss: 0.0020, PESQ: 2.9750
+INFO:root:? Saved checkpoint_last.pt (epoch 211, val_loss: 0.168877)
+INFO:root:Epoch 212, Step 500, loss: 0.2296, disc_loss: 0.0016, PESQ: 2.6848
+INFO:root:TEST - Generator loss: 0.1632, Discriminator loss: 0.0016, PESQ: 2.9960
+INFO:root:? Saved checkpoint_last.pt (epoch 212, val_loss: 0.163226)
+INFO:root:Epoch 213, Step 500, loss: 0.2282, disc_loss: 0.0016, PESQ: 2.6877
+INFO:root:TEST - Generator loss: 0.1669, Discriminator loss: 0.0017, PESQ: 2.9621
+INFO:root:? Saved checkpoint_last.pt (epoch 213, val_loss: 0.166897)
+INFO:root:Epoch 214, Step 500, loss: 0.2305, disc_loss: 0.0016, PESQ: 2.6773
+INFO:root:TEST - Generator loss: 0.1694, Discriminator loss: 0.0019, PESQ: 2.9791
+INFO:root:? Saved checkpoint_last.pt (epoch 214, val_loss: 0.169402)
+INFO:root:Epoch 215, Step 500, loss: 0.2312, disc_loss: 0.0017, PESQ: 2.6725
+INFO:root:TEST - Generator loss: 0.1762, Discriminator loss: 0.0021, PESQ: 2.9913
+INFO:root:? Saved checkpoint_last.pt (epoch 215, val_loss: 0.176227)
