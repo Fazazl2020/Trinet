@@ -16,8 +16,8 @@ from module import *
 # ============================================
 class Config:
     # Training hyperparameters
-    epochs = 120
-    batch_size = 6
+    epochs = 500
+    batch_size = 16
     log_interval = 500
     decay_epoch = 10
     init_lr = 1e-3
@@ -26,7 +26,28 @@ class Config:
 
     # Server paths - MODIFY THESE FOR YOUR SERVER
     data_dir = '/gdata/fewahab/data/VoicebanK-demand-16K'
-    save_model_dir = '/ghome/fewahab/My_5th_pap/Ab4-BSRNN/B1/ckpt'
+    save_model_dir = '/ghome/fewahab/My_5th_pap/Ab4-BSRNN/B3/saved_model'
+
+    # ========================================
+    # RESUME TRAINING CONFIGURATION (SIMPLIFIED!)
+    # ========================================
+    # To resume training:
+    # 1. Set resume_from_checkpoint to the checkpoint directory path
+    # 2. Set which checkpoint to load: 'best', 'best_pesq', or 'last'
+    # 3. Optionally increase epochs for more training
+    #
+    # The code will automatically:
+    # - Find the checkpoint file (checkpoint_best.pt, checkpoint_best_pesq.pt, or checkpoint_last.pt)
+    # - Load models, optimizers, schedulers, epoch number
+    # - Resume training seamlessly
+    #
+    # Example:
+    #   resume_from_checkpoint = '/ghome/fewahab/Sun-Models/Ab-5/BSRNN/saved_model'
+    #   load_checkpoint_type = 'best_pesq'  # or 'best' or 'last'
+    #   epochs = 200  # Train for more epochs
+
+    resume_from_checkpoint = None  # Path to checkpoint directory (or None to start fresh)
+    load_checkpoint_type = 'last'  # 'best', 'best_pesq', or 'last'
 
 args = Config()
 logging.basicConfig(level=logging.INFO)
@@ -40,23 +61,116 @@ class Trainer:
         self.test_ds = test_ds
 
         self.model = BSRNN(num_channel=64, num_layer=5).cuda()
-        # summary(self.model, [(1, 257, args.cut_len//self.hop+1, 2)])
         self.discriminator = Discriminator(ndf=16).cuda()
-        # summary(self.discriminator, [(1, 1, int(self.n_fft/2)+1, args.cut_len//self.hop+1),
-        #                              (1, 1, int(self.n_fft/2)+1, args.cut_len//self.hop+1)])
 
         self.optimizer = torch.optim.Adam(self.model.parameters(), lr=args.init_lr)
         self.optimizer_disc = torch.optim.Adam(self.discriminator.parameters(), lr=args.init_lr)
 
-        # Training state for best / latest checkpoint
+        # Checkpoint tracking
         self.start_epoch = 0
-        self.best_loss = float('inf')
+        self.best_loss = float('inf')  # Track best validation loss
         self.best_pesq = 0.0  # Track best PESQ score
+        self.loaded_scheduler_states = None  # Store loaded scheduler states
+
+        # Resume from checkpoint if specified
+        if args.resume_from_checkpoint is not None:
+            self.loaded_scheduler_states = self._load_checkpoint()
+
+    def _load_checkpoint(self):
+        """
+        Load checkpoint from directory (AUTO-DETECTS checkpoint file)
+
+        Returns:
+            scheduler_G, scheduler_D (if saved in checkpoint, else None)
+        """
+        logging.info('=' * 70)
+        logging.info('RESUMING FROM CHECKPOINT')
+        logging.info('=' * 70)
+
+        # Determine checkpoint filename
+        checkpoint_name = f'checkpoint_{args.load_checkpoint_type}.pt'
+        checkpoint_path = os.path.join(args.resume_from_checkpoint, checkpoint_name)
+
+        # Check if checkpoint exists
+        if not os.path.exists(checkpoint_path):
+            raise FileNotFoundError(
+                f'\n'
+                f'ERROR: Checkpoint not found!\n'
+                f'Looking for: {checkpoint_path}\n'
+                f'\n'
+                f'Make sure:\n'
+                f'  1. The checkpoint directory exists: {args.resume_from_checkpoint}\n'
+                f'  2. The checkpoint file exists: {checkpoint_name}\n'
+                f'  3. You specified the correct load_checkpoint_type: "{args.load_checkpoint_type}"\n'
+                f'\n'
+                f'Available checkpoint types: "best", "best_pesq", or "last"\n'
+            )
+
+        logging.info(f'Loading checkpoint from: {checkpoint_path}')
+
+        try:
+            checkpoint = torch.load(checkpoint_path)
+        except Exception as e:
+            raise RuntimeError(
+                f'ERROR: Failed to load checkpoint!\n'
+                f'File: {checkpoint_path}\n'
+                f'Error: {str(e)}\n'
+            )
+
+        # Load model states
+        logging.info('Loading model states...')
+        self.model.load_state_dict(checkpoint['model_state_dict'])
+        self.discriminator.load_state_dict(checkpoint['discriminator_state_dict'])
+        logging.info('✓ Models loaded successfully')
+
+        # Load optimizer states (CRITICAL for resume!)
+        logging.info('Loading optimizer states...')
+        self.optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+        self.optimizer_disc.load_state_dict(checkpoint['optimizer_disc_state_dict'])
+        logging.info('✓ Optimizers loaded successfully')
+
+        # Load training state
+        self.start_epoch = checkpoint['epoch'] + 1  # Resume from next epoch
+        self.best_loss = checkpoint.get('best_loss', float('inf'))
+        self.best_pesq = checkpoint.get('best_pesq', 0.0)
+
+        # Load scheduler states (if available)
+        scheduler_G_state = checkpoint.get('scheduler_G_state_dict', None)
+        scheduler_D_state = checkpoint.get('scheduler_D_state_dict', None)
+
+        # Validation: make sure we're not resuming beyond target epochs
+        if self.start_epoch >= args.epochs:
+            logging.warning(
+                f'\n'
+                f'WARNING: Resume epoch ({self.start_epoch}) >= target epochs ({args.epochs})\n'
+                f'You completed {self.start_epoch} epochs, but epochs={args.epochs}\n'
+                f'\n'
+                f'To train more epochs, increase "epochs" in Config.\n'
+                f'Example: epochs = {self.start_epoch + 80}  # Train 80 more epochs\n'
+            )
+
+        # Print summary
+        logging.info('=' * 70)
+        logging.info('RESUME SUMMARY:')
+        logging.info(f'  Checkpoint type: {args.load_checkpoint_type}')
+        logging.info(f'  Completed epochs: 0-{checkpoint["epoch"]} ({checkpoint["epoch"] + 1} epochs)')
+        logging.info(f'  Resuming from: epoch {self.start_epoch}')
+        logging.info(f'  Target epochs: {args.epochs}')
+        logging.info(f'  Remaining epochs: {max(0, args.epochs - self.start_epoch)}')
+        logging.info(f'  Best validation loss: {self.best_loss:.6f}')
+        logging.info(f'  Best PESQ: {self.best_pesq:.4f}')
+        val_loss = checkpoint.get('gen_loss', checkpoint.get('val_loss', 'N/A'))
+        logging.info(f'  Last validation loss: {val_loss}')
+        logging.info('=' * 70 + '\n')
+
+        return scheduler_G_state, scheduler_D_state
 
     # ----------------- CHECKPOINT SAVING -----------------
-    def save_checkpoint(self, epoch, gen_loss, pesq_score, is_best=False, is_best_pesq=False):
+    def save_checkpoint(self, epoch, gen_loss, pesq_score, scheduler_G, scheduler_D, is_best=False, is_best_pesq=False):
         """
-        Save:
+        Save checkpoint with ALL training state
+
+        Saves:
           - checkpoint_last.pt      : always (overwritten each epoch)
           - checkpoint_best.pt      : only when is_best == True (best validation loss)
           - checkpoint_best_pesq.pt : only when is_best_pesq == True (best PESQ score)
@@ -67,6 +181,8 @@ class Trainer:
             'discriminator_state_dict': self.discriminator.state_dict(),
             'optimizer_state_dict': self.optimizer.state_dict(),
             'optimizer_disc_state_dict': self.optimizer_disc.state_dict(),
+            'scheduler_G_state_dict': scheduler_G.state_dict(),
+            'scheduler_D_state_dict': scheduler_D.state_dict(),
             'best_loss': self.best_loss,
             'gen_loss': gen_loss,
             'best_pesq': self.best_pesq,
@@ -74,18 +190,22 @@ class Trainer:
         }
 
         os.makedirs(args.save_model_dir, exist_ok=True)
+
+        # Always save as "last" checkpoint
         latest_path = os.path.join(args.save_model_dir, 'checkpoint_last.pt')
         torch.save(checkpoint, latest_path)
 
+        # Save as "best" if validation loss improved
         if is_best:
             best_path = os.path.join(args.save_model_dir, 'checkpoint_best.pt')
             torch.save(checkpoint, best_path)
-            logging.info(f"New best model (loss) saved at epoch {epoch} with loss {gen_loss:.6f}")
+            logging.info(f"✓✓ NEW BEST LOSS! Saved checkpoint_best.pt (epoch {epoch}, loss {gen_loss:.6f})")
 
+        # Save as "best_pesq" if PESQ score improved
         if is_best_pesq:
             best_pesq_path = os.path.join(args.save_model_dir, 'checkpoint_best_pesq.pt')
             torch.save(checkpoint, best_pesq_path)
-            logging.info(f"New best model (PESQ) saved at epoch {epoch} with PESQ {pesq_score:.4f}")
+            logging.info(f"✓✓ NEW BEST PESQ! Saved checkpoint_best_pesq.pt (epoch {epoch}, PESQ {pesq_score:.4f})")
 
     # ----------------- TRAIN / TEST STEPS -----------------
     def train_step(self, batch, use_disc):
@@ -270,6 +390,22 @@ class Trainer:
             self.optimizer_disc, step_size=args.decay_epoch, gamma=0.98
         )
 
+        # Load scheduler states if resuming
+        if self.loaded_scheduler_states is not None:
+            scheduler_G_state, scheduler_D_state = self.loaded_scheduler_states
+            if scheduler_G_state is not None:
+                scheduler_G.load_state_dict(scheduler_G_state)
+                scheduler_D.load_state_dict(scheduler_D_state)
+                logging.info(f'✓ Scheduler states loaded')
+                logging.info(f'  Current learning rate: {scheduler_G.get_last_lr()[0]:.6f}')
+            else:
+                # Old checkpoint without scheduler states - manually adjust
+                logging.info('✓ Scheduler states not found in checkpoint, manually adjusting...')
+                for _ in range(self.start_epoch):
+                    scheduler_G.step()
+                    scheduler_D.step()
+                logging.info(f'  Scheduler adjusted: learning rate = {scheduler_G.get_last_lr()[0]:.6f}')
+
         for epoch in range(self.start_epoch, args.epochs):
             self.model.train()
             self.discriminator.train()
@@ -314,7 +450,8 @@ class Trainer:
             if is_best_pesq:
                 self.best_pesq = pesq_score
 
-            self.save_checkpoint(epoch, gen_loss, pesq_score, is_best=is_best, is_best_pesq=is_best_pesq)
+            self.save_checkpoint(epoch, gen_loss, pesq_score, scheduler_G, scheduler_D,
+                               is_best=is_best, is_best_pesq=is_best_pesq)
 
             scheduler_G.step()
             scheduler_D.step()
