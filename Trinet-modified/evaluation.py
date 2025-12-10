@@ -17,7 +17,7 @@ from datetime import datetime
 # ============================================
 class Config:
     # Model selection
-    use_best_model = False  # True: load best_model.pth, False: load checkpoint_latest.pth
+    use_best_model = False  # True: load checkpoint_best.pt, False: load checkpoint_last.pt
 
     # Server paths - MODIFY THESE FOR YOUR SERVER
     checkpoint_dir = '/ghome/fewahab/My_5th_pap/Ab4-BSRNN/B3/saved_model'
@@ -77,11 +77,11 @@ def evaluation():
 
     # Load checkpoint (best or latest)
     if args.use_best_model:
-        checkpoint_file = os.path.join(args.checkpoint_dir, 'best_model.pth')
+        checkpoint_file = os.path.join(args.checkpoint_dir, 'checkpoint_best.pt')
         model_type = 'best'
     else:
-        checkpoint_file = os.path.join(args.checkpoint_dir, 'checkpoint_latest.pth')
-        model_type = 'latest'
+        checkpoint_file = os.path.join(args.checkpoint_dir, 'checkpoint_last.pt')
+        model_type = 'last'
 
     if not os.path.exists(checkpoint_file):
         raise FileNotFoundError(f"Checkpoint not found: {checkpoint_file}")
