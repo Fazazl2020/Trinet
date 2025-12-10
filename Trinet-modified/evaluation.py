@@ -16,8 +16,11 @@ from datetime import datetime
 # CONFIGURATION - HARDCODED FOR SERVER
 # ============================================
 class Config:
-    # Model selection
-    use_best_model = False  # True: load checkpoint_best.pt, False: load checkpoint_last.pt
+    # Model selection - Choose one of: 'best', 'best_pesq', 'last'
+    # 'best'      : checkpoint_best.pt (best validation loss)
+    # 'best_pesq' : checkpoint_best_pesq.pt (best PESQ score)
+    # 'last'      : checkpoint_last.pt (most recent epoch)
+    model_type = 'last'
 
     # Server paths - MODIFY THESE FOR YOUR SERVER
     checkpoint_dir = '/ghome/fewahab/My_5th_pap/Ab4-BSRNN/B3/saved_model'
@@ -64,7 +67,7 @@ def evaluation():
     print("BSRNN Speech Enhancement - Evaluation")
     print("="*70)
     print(f"Checkpoint directory: {args.checkpoint_dir}")
-    print(f"Using {'BEST' if args.use_best_model else 'LATEST'} model checkpoint")
+    print(f"Model type: {args.model_type.upper()}")
     print(f"Test data directory: {args.test_data_dir}")
     print(f"Save enhanced audio: {args.save_enhanced_audio}")
     if args.save_enhanced_audio:
@@ -75,13 +78,18 @@ def evaluation():
     # Initialize model
     model = BSRNN(num_channel=64, num_layer=5).cuda()
 
-    # Load checkpoint (best or latest)
-    if args.use_best_model:
+    # Load checkpoint based on model_type
+    if args.model_type == 'best':
         checkpoint_file = os.path.join(args.checkpoint_dir, 'checkpoint_best.pt')
         model_type = 'best'
-    else:
+    elif args.model_type == 'best_pesq':
+        checkpoint_file = os.path.join(args.checkpoint_dir, 'checkpoint_best_pesq.pt')
+        model_type = 'best_pesq'
+    elif args.model_type == 'last':
         checkpoint_file = os.path.join(args.checkpoint_dir, 'checkpoint_last.pt')
         model_type = 'last'
+    else:
+        raise ValueError(f"Invalid model_type: {args.model_type}. Choose 'best', 'best_pesq', or 'last'")
 
     if not os.path.exists(checkpoint_file):
         raise FileNotFoundError(f"Checkpoint not found: {checkpoint_file}")
@@ -92,12 +100,16 @@ def evaluation():
 
     # Handle both old and new checkpoint formats
     epoch_info = checkpoint.get('epoch', 'unknown')
-    if 'gen_loss' in checkpoint:
-        print(f"Loaded model from epoch {epoch_info} with loss {checkpoint['gen_loss']:.6f}")
-    elif 'best_loss' in checkpoint:
-        print(f"Loaded model from epoch {epoch_info} with best_loss {checkpoint['best_loss']:.6f}")
-    else:
-        print(f"Loaded model from epoch {epoch_info}")
+    loss_info = f"loss: {checkpoint['gen_loss']:.6f}" if 'gen_loss' in checkpoint else ""
+    pesq_info = f"PESQ: {checkpoint['pesq_score']:.4f}" if 'pesq_score' in checkpoint else ""
+
+    info_parts = [f"Loaded model from epoch {epoch_info}"]
+    if loss_info:
+        info_parts.append(loss_info)
+    if pesq_info:
+        info_parts.append(pesq_info)
+
+    print(", ".join(info_parts))
 
     model.eval()
 
@@ -176,8 +188,13 @@ def evaluation():
         elif 'best_loss' in checkpoint:
             f.write(f"Best loss: {checkpoint['best_loss']:.6f}\n")
 
+        if 'pesq_score' in checkpoint:
+            f.write(f"Training PESQ: {checkpoint['pesq_score']:.4f}\n")
+        if 'best_pesq' in checkpoint:
+            f.write(f"Best PESQ: {checkpoint['best_pesq']:.4f}\n")
+
         f.write(f"Test data directory: {args.test_data_dir}\n")
-        f.write(f"Number of test files: {num}\n") 
+        f.write(f"Number of test files: {num}\n")
         f.write("\n" + "="*70 + "\n")
         f.write("METRICS\n")
         f.write("="*70 + "\n")
