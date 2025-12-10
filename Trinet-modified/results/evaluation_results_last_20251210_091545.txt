@@ -1,0 +1,21 @@
+======================================================================
+BSRNN Speech Enhancement - Evaluation Results
+======================================================================
+
+Date: 2025-12-10 09:15:45
+Checkpoint: /ghome/fewahab/My_5th_pap/Ab4-BSRNN/B3/saved_model/checkpoint_last.pt
+Model type: last
+Epoch: 404
+Test data directory: /gdata/fewahab/data/VoicebanK-demand-16K/test
+Number of test files: 824
+
+======================================================================
+METRICS
+======================================================================
+PESQ: 2.9727
+CSIG: 4.1164
+CBAK: 3.4872
+COVL: 3.5889
+SSNR: 7.5490
+STOI: 0.9324
+======================================================================
