@@ -1,13 +1,14 @@
 """
-M3: ABLATION - FAC + Single-Branch MRHA
-=========================================
+M3: ABLATION - FAC + 2-Branch Hybrid Attention (Dot + Cosine)
+===============================================================
 
-This model tests FAC + single-resolution attention baseline.
+This model tests FAC + 2-branch hybrid attention (dot-product + cosine).
 - Uses FAC in encoder (novel component)
-- Uses single-branch dot-product attention (NO multi-resolution, NO cosine, NO gating)
-- Same AIA_Transformer structure but with simplified attention
+- Uses 2-branch hybrid attention: dot-product + cosine with learnable temperature
+- 2-way learnable gating to combine branches
+- NO cross-resolution (single-resolution only)
 
-Purpose: Establish baseline for multi-resolution attention benefit.
+Purpose: Test cosine attention benefit over dot-product at low SNR.
 """
 
 import torch
@@ -158,41 +159,70 @@ class FACLayer(nn.Module):
 
 
 # ============================================================================
-# SINGLE-BRANCH ATTENTION (Baseline for Multi-Resolution)
+# 2-BRANCH HYBRID ATTENTION (Dot + Cosine)
 # ============================================================================
 
-class SingleBranch_SelfAttention(nn.Module):
+class TwoBranch_Hybrid_SelfAttention(nn.Module):
     """
-    SINGLE-BRANCH baseline - Only dot-product attention
-    NO cross-resolution, NO cosine, NO gating
+    2-BRANCH HYBRID ATTENTION - Dot-product + Cosine with 2-way gating
+    NO cross-resolution (single-resolution only)
+    Tests: Cosine normalization benefit at low SNR
     """
     def __init__(self, in_channels, downsample_stride=2):
         super().__init__()
         self.in_channels = in_channels
 
-        # Only Local Dot-Product Branch
+        # Branch 1: Local Dot-Product Attention
         self.query_dot = nn.Linear(in_channels, in_channels)
         self.key_dot = nn.Linear(in_channels, in_channels)
         self.value_dot = nn.Linear(in_channels, in_channels)
         self.norm_dot = nn.LayerNorm(in_channels)
 
+        # Branch 2: Local Cosine Attention with learnable temperature
+        self.query_cos = nn.Linear(in_channels, in_channels)
+        self.key_cos = nn.Linear(in_channels, in_channels)
+        self.value_cos = nn.Linear(in_channels, in_channels)
+        self.norm_cos = nn.LayerNorm(in_channels)
+        self.cos_temperature = nn.Parameter(torch.tensor(0.1))  # Learnable temperature
+
+        # 2-Way Gating (combines dot + cosine)
+        self.gate_conv = nn.Conv1d(2 * in_channels, 2, kernel_size=1)
+        self.eps = 1e-8
+
     def forward(self, x):
         B, T, C = x.shape
 
-        # Single dot-product attention branch
+        # Branch 1: Dot-Product Attention
         q_dot = self.query_dot(x)
         k_dot = self.key_dot(x)
         v_dot = self.value_dot(x)
         attn_dot = F.softmax(torch.bmm(q_dot, k_dot.transpose(1,2)) / math.sqrt(C), dim=-1)
         out_dot = self.norm_dot(torch.bmm(attn_dot, v_dot))
 
-        return out_dot
+        # Branch 2: Cosine Attention with temperature
+        q_cos = self.query_cos(x)
+        k_cos = self.key_cos(x)
+        q_norm = q_cos / (q_cos.norm(dim=2, keepdim=True) + self.eps)
+        k_norm = k_cos / (k_cos.norm(dim=2, keepdim=True) + self.eps)
+        temperature = self.cos_temperature.clamp(min=0.01)
+        attn_cos = F.softmax(torch.bmm(q_norm, k_norm.transpose(1,2)) / temperature, dim=-1)
+        out_cos = self.norm_cos(torch.bmm(attn_cos, self.value_cos(x)))
+
+        # 2-Way Gating
+        fused = torch.cat([out_dot, out_cos], dim=-1).permute(0,2,1)
+        gating = F.softmax(self.gate_conv(fused), dim=1)  # [B, 2, T]
+        gating = gating.permute(0,2,1).unsqueeze(2)  # [B, T, 1, 2]
+
+        outputs = torch.stack([out_dot, out_cos], dim=3)  # [B, T, C, 2]
+        z = torch.sum(gating * outputs, dim=3)  # [B, T, C]
+
+        return z
 
 
 class AIA_Transformer(nn.Module):
     """
-    Modified AIA_Transformer with SINGLE-BRANCH attention
-    Same structure as full AIA but with simplified attention mechanism
+    Modified AIA_Transformer with 2-BRANCH HYBRID attention (Dot + Cosine)
+    Same structure as full AIA but with 2-branch attention mechanism
     """
     def __init__(self, input_size, output_size, dropout=0.1):
         super().__init__()
@@ -206,9 +236,9 @@ class AIA_Transformer(nn.Module):
             nn.Dropout(dropout)
         )
 
-        # Use single-branch attention instead of MRHA3
-        self.row_trans = SingleBranch_SelfAttention(input_size//2)
-        self.col_trans = SingleBranch_SelfAttention(input_size//2)
+        # Use 2-branch hybrid attention (dot + cosine)
+        self.row_trans = TwoBranch_Hybrid_SelfAttention(input_size//2)
+        self.col_trans = TwoBranch_Hybrid_SelfAttention(input_size//2)
 
         self.row_norm = nn.InstanceNorm2d(input_size//2, affine=True)
         self.col_norm = nn.InstanceNorm2d(input_size//2, affine=True)
@@ -266,17 +296,18 @@ class AIA_Transformer(nn.Module):
 
 
 # ============================================================================
-# MAIN NETWORK: FAC + Single-Branch MRHA
+# MAIN NETWORK: FAC + 2-Branch Hybrid Attention (Dot + Cosine)
 # ============================================================================
 
 class TrinetBSRNN(nn.Module):
     """
-    M3: FAC + Single-Branch MRHA
+    M3: FAC + 2-Branch Hybrid Attention (Dot + Cosine)
 
-    Tests single-resolution attention baseline:
+    Tests cosine attention benefit:
     - Uses FAC in encoder (novel)
-    - Uses single-branch attention (baseline for multi-resolution)
+    - Uses 2-branch hybrid attention (dot + cosine with 2-way gating)
     - Same row/column structure as full AIA
+    - NO cross-resolution (single-resolution only)
     """
     def __init__(self, num_channel=128, num_layer=6, F=257):
         super().__init__()
@@ -307,7 +338,7 @@ class TrinetBSRNN(nn.Module):
         if num_layer >= 6:
             self.conv6 = FACLayer(c5, c6, (2,5), (1,2), (1,1), F)
 
-        # BOTTLENECK: Single-Branch AIA
+        # BOTTLENECK: 2-Branch Hybrid AIA (Dot + Cosine)
         self.m1 = AIA_Transformer(bottleneck_ch, bottleneck_ch)
 
         # DECODER
@@ -375,7 +406,7 @@ class TrinetBSRNN(nn.Module):
         else:
             bottleneck_input = e5
 
-        # BOTTLENECK: Single-Branch AIA
+        # BOTTLENECK: 2-Branch Hybrid AIA (Dot + Cosine)
         aia_out = self.m1(bottleneck_input)
         out = torch.cat([aia_out, bottleneck_input], dim=1)
 
