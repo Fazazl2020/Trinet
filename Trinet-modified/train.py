@@ -51,13 +51,15 @@ class Trainer:
         # Training state for best / latest checkpoint
         self.start_epoch = 0
         self.best_loss = float('inf')
+        self.best_pesq = 0.0  # Track best PESQ score
 
     # ----------------- CHECKPOINT SAVING -----------------
-    def save_checkpoint(self, epoch, gen_loss, is_best=False):
+    def save_checkpoint(self, epoch, gen_loss, pesq_score, is_best=False, is_best_pesq=False):
         """
         Save:
-          - checkpoint_last.pt : always (overwritten each epoch)
-          - checkpoint_best.pt : only when is_best == True
+          - checkpoint_last.pt      : always (overwritten each epoch)
+          - checkpoint_best.pt      : only when is_best == True (best validation loss)
+          - checkpoint_best_pesq.pt : only when is_best_pesq == True (best PESQ score)
         """
         checkpoint = {
             'epoch': epoch,
@@ -67,6 +69,8 @@ class Trainer:
             'optimizer_disc_state_dict': self.optimizer_disc.state_dict(),
             'best_loss': self.best_loss,
             'gen_loss': gen_loss,
+            'best_pesq': self.best_pesq,
+            'pesq_score': pesq_score,
         }
 
         os.makedirs(args.save_model_dir, exist_ok=True)
@@ -76,7 +80,12 @@ class Trainer:
         if is_best:
             best_path = os.path.join(args.save_model_dir, 'checkpoint_best.pt')
             torch.save(checkpoint, best_path)
-            logging.info(f"New best model saved at epoch {epoch} with loss {gen_loss:.6f}")
+            logging.info(f"New best model (loss) saved at epoch {epoch} with loss {gen_loss:.6f}")
+
+        if is_best_pesq:
+            best_pesq_path = os.path.join(args.save_model_dir, 'checkpoint_best_pesq.pt')
+            torch.save(checkpoint, best_pesq_path)
+            logging.info(f"New best model (PESQ) saved at epoch {epoch} with PESQ {pesq_score:.4f}")
 
     # ----------------- TRAIN / TEST STEPS -----------------
     def train_step(self, batch, use_disc):
@@ -251,7 +260,7 @@ class Trainer:
         template = 'TEST - Generator loss: {:.4f}, Discriminator loss: {:.4f}, PESQ: {:.4f}'
         logging.info(template.format(gen_loss_avg, disc_loss_avg, pesq_avg))
 
-        return gen_loss_avg
+        return gen_loss_avg, pesq_avg
 
     def train(self):
         scheduler_G = torch.optim.lr_scheduler.StepLR(
@@ -293,13 +302,19 @@ class Trainer:
                     )
 
             # Validation + checkpoint saving
-            gen_loss = self.test(use_disc)
+            gen_loss, pesq_score = self.test(use_disc)
 
+            # Check if best loss
             is_best = gen_loss < self.best_loss
             if is_best:
                 self.best_loss = gen_loss
 
-            self.save_checkpoint(epoch, gen_loss, is_best=is_best)
+            # Check if best PESQ
+            is_best_pesq = pesq_score > self.best_pesq
+            if is_best_pesq:
+                self.best_pesq = pesq_score
+
+            self.save_checkpoint(epoch, gen_loss, pesq_score, is_best=is_best, is_best_pesq=is_best_pesq)
 
             scheduler_G.step()
             scheduler_D.step()
