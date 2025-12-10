@@ -56,8 +56,8 @@ class Trainer:
     def save_checkpoint(self, epoch, gen_loss, is_best=False):
         """
         Save:
-          - checkpoint_latest.pth : always (overwritten each epoch)
-          - best_model.pth        : only when is_best == True
+          - checkpoint_last.pt : always (overwritten each epoch)
+          - checkpoint_best.pt : only when is_best == True
         """
         checkpoint = {
             'epoch': epoch,
@@ -70,13 +70,13 @@ class Trainer:
         }
 
         os.makedirs(args.save_model_dir, exist_ok=True)
-        latest_path = os.path.join(args.save_model_dir, 'checkpoint_latest.pth')
+        latest_path = os.path.join(args.save_model_dir, 'checkpoint_last.pt')
         torch.save(checkpoint, latest_path)
 
         if is_best:
-            best_path = os.path.join(args.save_model_dir, 'best_model.pth')
+            best_path = os.path.join(args.save_model_dir, 'checkpoint_best.pt')
             torch.save(checkpoint, best_path)
-            logging.info(f"? New best model saved at epoch {epoch} with loss {gen_loss:.6f}")
+            logging.info(f"New best model saved at epoch {epoch} with loss {gen_loss:.6f}")
 
     # ----------------- TRAIN / TEST STEPS -----------------
     def train_step(self, batch, use_disc):
