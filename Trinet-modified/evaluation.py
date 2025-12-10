@@ -8,7 +8,6 @@ import os
 from tools.compute_metrics import compute_metrics
 from utils import *
 import librosa
-import matplotlib.pyplot as plt
 from tqdm import tqdm
 import soundfile as sf
 from datetime import datetime
@@ -18,12 +17,12 @@ from datetime import datetime
 # ============================================
 class Config:
     # Model selection
-    use_best_model = True  # True: load best_model.pth, False: load checkpoint_latest.pth
+    use_best_model = False  # True: load best_model.pth, False: load checkpoint_latest.pth
 
     # Server paths - MODIFY THESE FOR YOUR SERVER
-    checkpoint_dir = '/ghome/fewahab/My_5th_pap/Ab4-BSRNN/B1/ckpt'
+    checkpoint_dir = '/ghome/fewahab/My_5th_pap/Ab4-BSRNN/B3/saved_model'
     test_data_dir = '/gdata/fewahab/data/VoicebanK-demand-16K/test'
-    enhanced_audio_dir = '/ghome/fewahab/My_5th_pap/Ab4-BSRNN/B1/enhanced_audio'
+    enhanced_audio_dir = '/gdata/fewahab/My_5th_pap/Ab4-BSRNN/B3/enhanced_audio'
 
     # Evaluation settings
     save_enhanced_audio = True  # Save enhanced audio files
