@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python
 # coding: utf-8
 
@@ -90,7 +89,16 @@ def evaluation():
     print(f"Loading checkpoint from: {checkpoint_file}")
     checkpoint = torch.load(checkpoint_file)
     model.load_state_dict(checkpoint['model_state_dict'])
-    print(f"Loaded model from epoch {checkpoint['epoch']} with loss {checkpoint['gen_loss']:.6f}")
+
+    # Handle both old and new checkpoint formats
+    epoch_info = checkpoint.get('epoch', 'unknown')
+    if 'gen_loss' in checkpoint:
+        print(f"Loaded model from epoch {epoch_info} with loss {checkpoint['gen_loss']:.6f}")
+    elif 'best_loss' in checkpoint:
+        print(f"Loaded model from epoch {epoch_info} with best_loss {checkpoint['best_loss']:.6f}")
+    else:
+        print(f"Loaded model from epoch {epoch_info}")
+
     model.eval()
 
     # Create directory for saving enhanced audio files
@@ -160,10 +168,16 @@ def evaluation():
         f.write(f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
         f.write(f"Checkpoint: {checkpoint_file}\n")
         f.write(f"Model type: {model_type}\n")
-        f.write(f"Epoch: {checkpoint['epoch']}\n")
-        f.write(f"Training loss: {checkpoint['gen_loss']:.6f}\n")
+        f.write(f"Epoch: {checkpoint.get('epoch', 'unknown')}\n")
+
+        # Handle both old and new checkpoint formats
+        if 'gen_loss' in checkpoint:
+            f.write(f"Training loss: {checkpoint['gen_loss']:.6f}\n")
+        elif 'best_loss' in checkpoint:
+            f.write(f"Best loss: {checkpoint['best_loss']:.6f}\n")
+
         f.write(f"Test data directory: {args.test_data_dir}\n")
-        f.write(f"Number of test files: {num}\n")
+        f.write(f"Number of test files: {num}\n") 
         f.write("\n" + "="*70 + "\n")
         f.write("METRICS\n")
         f.write("="*70 + "\n")
@@ -181,4 +195,4 @@ def evaluation():
 
 
 if __name__ == '__main__':
-    evaluation() 
+    evaluation()
