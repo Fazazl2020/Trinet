@@ -9,6 +9,7 @@ from natsort import natsorted
 import librosa
 import numpy as np
 from module import *
+from utils import batch_pesq  # ✅ FIXED: Added missing import
 from pystoi import stoi as stoi_metric  # pip install pystoi
 
 # ============================================
