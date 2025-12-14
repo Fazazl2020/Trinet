@@ -104,20 +104,25 @@ cp ablation_FAC_direct_weighting/module.py module.py
 python train.py
 ```
 
-### Parallel Testing
+### Parallel Testing (RECOMMENDED)
 
-To run both in parallel (recommended):
+To run all three in parallel:
 
 ```bash
-# Terminal 1: Ablation 1
+# Terminal 1: Ablation 1 (Multiplicative)
 cd /path/to/trinet_ablation1
 cp /home/user/Trinet/Trinet-modified/ablation_FAC_multiplicative/module.py .
-python train.py --experiment_name "FAC_multiplicative"
+python train_improved.py --experiment_name "FAC_multiplicative"
 
-# Terminal 2: Ablation 2
+# Terminal 2: Ablation 2 (Direct Weighting)
 cd /path/to/trinet_ablation2
 cp /home/user/Trinet/Trinet-modified/ablation_FAC_direct_weighting/module.py .
-python train.py --experiment_name "FAC_direct_weighting"
+python train_improved.py --experiment_name "FAC_direct_weighting"
+
+# Terminal 3: Ablation 3 (Combined) ✨
+cd /path/to/trinet_ablation3
+cp /home/user/Trinet/Trinet-modified/ablation_FAC_combined/module.py .
+python train_improved.py --experiment_name "FAC_combined"
 ```
 
 ---
@@ -134,14 +139,45 @@ Both modules have been:
 
 ## Comparison Matrix
 
-| Aspect | Original | Ablation 1 | Ablation 2 |
-|--------|----------|------------|------------|
-| **Operation** | X + bias | X × (1 + gain) | X × mask |
-| **Band weights** | Via PE | Via PE | Direct |
-| **PE usage** | Yes | Yes | No |
-| **Theory basis** | Novel | Wiener/IRM | IRM/Masking |
-| **Complexity** | High | High | Medium |
-| **Expected gain** | Baseline | +0.15-0.25 | +0.10-0.20 |
+| Aspect | Original | Ablation 1 | Ablation 2 | Ablation 3 |
+|--------|----------|------------|------------|------------|
+| **Operation** | X + bias | X × (1 + gain) | X × mask | Both stages |
+| **Band weights** | Via PE | Via PE | Direct | Both |
+| **PE usage** | Yes | Yes | No | Yes (Stage 1) |
+| **Direct weighting** | No | No | Yes | Yes (Stage 2) |
+| **Theory basis** | Novel | Wiener/IRM | IRM/Masking | Combined |
+| **Complexity** | High | High | Medium | High |
+| **Expected gain** | Baseline | +0.15-0.25 | +0.10-0.20 | +0.20-0.35 |
+
+---
+
+## Ablation Study 3: Combined (NEW)
+
+### Location
+`ablation_FAC_combined/`
+
+### Theoretical Basis
+
+**Tests synergistic effects** of combining both modifications:
+- Multiplicative operation (Wiener/IRM theory)
+- Direct frequency weighting (Classical masking)
+
+### Architecture
+
+**Two-Stage Processing**:
+```python
+# Stage 1: Multiplicative PE gating
+X_pe = X * (1.0 + gate * attn * P_freq_scaled)
+
+# Stage 2: Direct band weighting
+X_final = X_pe * freq_mask
+```
+
+### Expected Results
+
+- **Predicted PESQ**: 3.06 - 3.21 (+0.20 to +0.35)
+- **Theoretical Strength**: ★★★★★ (Tests if both issues are genuine)
+- **Implementation Risk**: ★★☆☆☆ (Combines both approaches)
 
 ---
 
@@ -158,6 +194,12 @@ Both modules have been:
 - **Removes** AdaptiveFrequencyBandPositionalEncoding from forward pass
 - **Simplifies** processing (fewer operations)
 - **Aligns** with classical masking approaches
+
+### Ablation 3 (Combined)
+- **Two-stage processing**: Multiplicative PE + Direct weighting
+- **Tests both hypotheses** simultaneously
+- **Separate learnable gains** for each stage
+- **Highest expected improvement** if modifications are complementary
 
 ---
 
